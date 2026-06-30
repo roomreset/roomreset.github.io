@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RoomReset | Aesthetic Home Decor on a Budget</title>
+<meta name="description" content="Room transformations, organization ideas, and decor inspiration that actually looks expensive, without the expensive price tag.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blush: #f3e6e2;
+    --blush-deep: #e3c2ba;
+    --sage: #a9b29a;
+    --sage-deep: #7c8a6c;
+    --cream: #faf6f1;
+    --charcoal: #3a3530;
+    --ink-soft: #6b6258;
+    --line: #e8ddd4;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background-color: var(--cream);
+    color: var(--charcoal);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    color: var(--charcoal);
+    line-height: 1.25;
+  }
+
+  a { text-decoration: none; color: inherit; }
+  img { display: block; max-width: 100%; }
+
+  .wrap {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  header {
+    padding: 28px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  .logo em {
+    font-style: italic;
+    color: var(--sage-deep);
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 36px;
+  }
+
+  nav a {
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    transition: color 0.2s ease;
+  }
+
+  nav a:hover { color: var(--sage-deep); }
+
+  .hero {
+    padding: 90px 0 100px;
+    text-align: center;
+    background: linear-gradient(180deg, var(--blush) 0%, var(--cream) 100%);
+  }
+
+  .hero-eyebrow {
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--sage-deep);
+    margin-bottom: 22px;
+    display: block;
+  }
+
+  .hero h1 {
+    font-size: 56px;
+    max-width: 780px;
+    margin: 0 auto 28px;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--sage-deep);
+  }
+
+  .hero p {
+    max-width: 620px;
+    margin: 0 auto 38px;
+    font-size: 17px;
+    color: var(--ink-soft);
+    line-height: 1.8;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 18px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 14px 32px;
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    transition: all 0.25s ease;
+  }
+
+  .btn-primary {
+    background-color: var(--charcoal);
+    color: var(--cream);
+  }
+
+  .btn-primary:hover {
+    background-color: var(--sage-deep);
+  }
+
+  .btn-outline {
+    border: 1px solid var(--charcoal);
+    color: var(--charcoal);
+  }
+
+  .btn-outline:hover {
+    background-color: var(--charcoal);
+    color: var(--cream);
+  }
+
+  .stats {
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 36px 0;
+  }
+
+  .stats-inner {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 24px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    color: var(--sage-deep);
+  }
+
+  .stat-label {
+    font-size: 13px;
+    color: var(--ink-soft);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+
+  .section {
+    padding: 100px 0;
+  }
+
+  .section-head {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 60px;
+  }
+
+  .section-eyebrow {
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--sage-deep);
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .section-head h2 {
+    font-size: 38px;
+    margin-bottom: 18px;
+  }
+
+  .section-head p {
+    color: var(--ink-soft);
+    font-size: 16px;
+    line-height: 1.8;
+  }
+
+  .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+
+  .category-card {
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: flex-end;
+    transition: transform 0.4s ease;
+  }
+
+  .category-card:hover {
+    transform: translateY(-6px);
+  }
+
+  .category-overlay {
+    background: linear-gradient(180deg, rgba(58,53,48,0) 30%, rgba(58,53,48,0.78) 100%);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .category-content {
+    position: relative;
+    padding: 28px;
+    color: var(--cream);
+    z-index: 2;
+  }
+
+  .category-content h3 {
+    color: var(--cream);
+    font-size: 24px;
+    margin-bottom: 8px;
+  }
+
+  .category-content p {
+    font-size: 13px;
+    color: var(--blush);
+    letter-spacing: 0.03em;
+  }
+
+  .cat-bedroom { background-color: #d8b6ae; }
+  .cat-organization { background-color: #c3c9b3; }
+  .cat-budget { background-color: #e3c2ba; }
+  .cat-style { background-color: #b3bba0; }
+  .cat-small { background-color: #ddc9bc; }
+  .cat-shop { background-color: #aab394; }
+
+  .articles-bg {
+    background-color: var(--blush);
+  }
+
+  .articles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+
+  .article-card {
+    background-color: var(--cream);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .article-thumb {
+    aspect-ratio: 4 / 3;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .thumb-1 { background-color: #cfa89e; }
+  .thumb-2 { background-color: #b7c0a3; }
+  .thumb-3 { background-color: #d9c0ab; }
+  .thumb-4 { background-color: #a3ab8d; }
+  .thumb-5 { background-color: #e0cabb; }
+  .thumb-6 { background-color: #c1ad96; }
+
+  .article-body {
+    padding: 26px 26px 30px;
+  }
+
+  .article-tag {
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--sage-deep);
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .article-body h3 {
+    font-size: 21px;
+    margin-bottom: 12px;
+  }
+
+  .article-body p {
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    line-height: 1.75;
+    margin-bottom: 18px;
+  }
+
+  .article-link {
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    border-bottom: 1px solid var(--charcoal);
+    padding-bottom: 2px;
+  }
+
+  .philosophy {
+    text-align: center;
+    padding: 110px 0;
+  }
+
+  .philosophy blockquote {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 32px;
+    max-width: 760px;
+    margin: 0 auto 24px;
+    line-height: 1.5;
+    color: var(--charcoal);
+  }
+
+  .philosophy cite {
+    font-style: normal;
+    font-size: 14px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--sage-deep);
+  }
+
+  .newsletter {
+    background-color: var(--sage);
+    padding: 80px 0;
+    text-align: center;
+  }
+
+  .newsletter h2 {
+    color: var(--cream);
+    font-size: 32px;
+    margin-bottom: 16px;
+  }
+
+  .newsletter p {
+    color: var(--cream);
+    opacity: 0.92;
+    max-width: 540px;
+    margin: 0 auto 32px;
+    font-size: 15.5px;
+    line-height: 1.8;
+  }
+
+  .newsletter-form {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    max-width: 440px;
+    margin: 0 auto;
+  }
+
+  .newsletter-form input {
+    flex: 1;
+    padding: 15px 20px;
+    border: none;
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    background-color: var(--cream);
+    color: var(--charcoal);
+  }
+
+  .newsletter-form button {
+    padding: 15px 28px;
+    background-color: var(--charcoal);
+    color: var(--cream);
+    border: none;
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.25s ease;
+  }
+
+  .newsletter-form button:hover {
+    background-color: var(--ink-soft);
+  }
+
+  footer {
+    padding: 70px 0 40px;
+    border-top: 1px solid var(--line);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 60px;
+  }
+
+  .footer-grid h4 {
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    margin-bottom: 18px;
+    font-family: 'Jost', sans-serif;
+    font-weight: 500;
+  }
+
+  .footer-grid p {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.8;
+    max-width: 320px;
+  }
+
+  .footer-grid ul {
+    list-style: none;
+  }
+
+  .footer-grid li {
+    margin-bottom: 12px;
+  }
+
+  .footer-grid a {
+    font-size: 14px;
+    color: var(--ink-soft);
+    transition: color 0.2s ease;
+  }
+
+  .footer-grid a:hover {
+    color: var(--sage-deep);
+  }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 30px;
+    border-top: 1px solid var(--line);
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-bottom p {
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  .social-links {
+    display: flex;
+    gap: 18px;
+  }
+
+  .social-links a {
+    width: 38px;
+    height: 38px;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: var(--ink-soft);
+    transition: all 0.2s ease;
+  }
+
+  .social-links a:hover {
+    background-color: var(--charcoal);
+    color: var(--cream);
+    border-color: var(--charcoal);
+  }
+
+  @media (max-width: 900px) {
+    nav { display: none; }
+    .hero h1 { font-size: 38px; }
+    .categories-grid { grid-template-columns: repeat(2, 1fr); }
+    .articles-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .stats-inner { gap: 36px; }
+    .philosophy blockquote { font-size: 24px; }
+  }
+
+  @media (max-width: 560px) {
+    .categories-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .hero { padding: 60px 0 70px; }
+    .section { padding: 70px 0; }
+    .hero-actions { flex-direction: column; align-items: center; }
+    .newsletter-form { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap header-inner">
+    <a href="index.html" class="logo">Room<em>Reset</em></a>
+    <nav>
+      <ul>
+        <li><a href="#categories">Room Ideas</a></li>
+        <li><a href="#articles">Organization</a></li>
+        <li><a href="#articles">Budget Decor</a></li>
+        <li><a href="about-us/index.html">About</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="hero-eyebrow">A space to slow down and start over</span>
+    <h1>Aesthetic home decor that feels like <em>you</em>, even on a small budget</h1>
+    <p>RoomReset is a guide for anyone who wants their home to feel calmer, prettier, and more intentional without spending a fortune to get there. Every room transformation, organization idea, and decor pick here has been chosen with one goal in mind, helping your space look expensive while your wallet stays exactly where it should be.</p>
+    <div class="hero-actions">
+      <a href="#categories" class="btn btn-primary">Start Exploring</a>
+      <a href="about-us/index.html" class="btn btn-outline">Who Writes This</a>
+    </div>
+  </div>
+</section>
+
+<div class="stats">
+  <div class="wrap stats-inner">
+    <div>
+      <div class="stat-num">6</div>
+      <div class="stat-label">Room Categories</div>
+    </div>
+    <div>
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Budget Friendly Picks</div>
+    </div>
+    <div>
+      <div class="stat-num">Soft</div>
+      <div class="stat-label">Calming Aesthetic</div>
+    </div>
+    <div>
+      <div class="stat-num">2026</div>
+      <div class="stat-label">Reset Since</div>
+    </div>
+  </div>
+</div>
+
+<section class="section" id="categories">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-eyebrow">Explore by category</span>
+      <h2>Find the reset your space needs</h2>
+      <p>Whether you are working with an entire room or a single corner, these categories will guide you toward the ideas that genuinely fit your space, your style, and your budget right now.</p>
+    </div>
+
+    <div class="categories-grid">
+      <a href="bedroom-ideas/index.html" class="category-card cat-bedroom">
+        <div class="category-overlay"></div>
+        <div class="category-content">
+          <h3>Room Ideas</h3>
+          <p>Bedroom, living room, and kitchen inspiration for full transformations</p>
+        </div>
+      </a>
+
+      <a href="organization/index.html" class="category-card cat-organization">
+        <div class="category-overlay"></div>
+        <div class="category-content">
+          <h3>Organization</h3>
+          <p>Fridge, closet, and laundry systems that actually stay tidy</p>
+        </div>
+      </a>
+
+      <a href="budget-decor/index.html" class="category-card cat-budget">
+        <div class="category-overlay"></div>
+        <div class="category-content">
+          <h3>Budget Decor</h3>
+          <p>Decor roundups sorted by price so you always know what fits</p>
+        </div>
+      </a>
+
+      <a href="by-style/index.html" class="category-card cat-style">
+        <div class="category-overlay"></div>
+        <div class="category-content">
+          <h3>By Style</h3>
+          <p>Cottagecore, moody, and minimalist guides for every aesthetic</p>
+        </div>
+      </a>
+
+      <a href="small-spaces/index.html" class="category-card cat-small">
+        <div class="category-overlay"></div>
+        <div class="category-content">
+          <h3>Small Spaces</h3>
+          <p>Apartment friendly ideas for reading nooks, balconies, and more</p>
+        </div>
+      </a>
+
+      <a href="shop-picks/index.html" class="category-card cat-shop">
+        <div class="category-overlay"></div>
+        <div class="category-content">
+          <h3>Shop Picks</h3>
+          <p>Curated product lists chosen for both quality and price</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="section articles-bg" id="articles">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="section-eyebrow">Fresh from the blog</span>
+      <h2>Latest room resets</h2>
+      <p>Real ideas, honest budgets, and the small details that make a space feel finished instead of half decorated.</p>
+    </div>
+
+    <div class="articles-grid">
+      <a href="small-bedroom-ideas/index.html" class="article-card">
+        <div class="article-thumb thumb-1"></div>
+        <div class="article-body">
+          <span class="article-tag">Room Ideas</span>
+          <h3>Small Bedroom Ideas Under 3000 Rupees</h3>
+          <p>A complete guide to making a tiny bedroom feel calm, spacious, and put together using only a handful of affordable pieces that genuinely earn their place.</p>
+          <span class="article-link">Read the Guide</span>
+        </div>
+      </a>
+
+      <a href="fridge-organization/index.html" class="article-card">
+        <div class="article-thumb thumb-2"></div>
+        <div class="article-body">
+          <span class="article-tag">Organization</span>
+          <h3>Fridge Organization That Actually Looks Good</h3>
+          <p>The bins, labels, and layout tricks behind the aesthetic fridge trend, broken down into steps you can finish in a single afternoon.</p>
+          <span class="article-link">Read the Guide</span>
+        </div>
+      </a>
+
+      <a href="cottagecore-bedroom/index.html" class="article-card">
+        <div class="article-thumb thumb-3"></div>
+        <div class="article-body">
+          <span class="article-tag">By Style</span>
+          <h3>Cottagecore Bedroom on a Budget</h3>
+          <p>Soft linens, dried florals, and warm wood tones combine into a cozy cottagecore bedroom that feels collected over time, not bought in a single trip.</p>
+          <span class="article-link">Read the Guide</span>
+        </div>
+      </a>
+
+      <a href="living-room-glow-up/index.html" class="article-card">
+        <div class="article-thumb thumb-4"></div>
+        <div class="article-body">
+          <span class="article-tag">Budget Decor</span>
+          <h3>Living Room Glow Up Under 5000 Rupees</h3>
+          <p>Where to spend and where to save when refreshing a living room on a tight budget, with a shopping list that prioritizes pieces with the most visual impact.</p>
+          <span class="article-link">Read the Guide</span>
+        </div>
+      </a>
+
+      <a href="reading-nook-ideas/index.html" class="article-card">
+        <div class="article-thumb thumb-5"></div>
+        <div class="article-body">
+          <span class="article-tag">Small Spaces</span>
+          <h3>Cozy Reading Nook Ideas for Small Apartments</h3>
+          <p>Turning an unused corner into a genuine reading nook, even when square footage is limited and a dedicated room simply is not an option.</p>
+          <span class="article-link">Read the Guide</span>
+        </div>
+      </a>
+
+      <a href="moody-bedroom-makeover/index.html" class="article-card">
+        <div class="article-thumb thumb-6"></div>
+        <div class="article-body">
+          <span class="article-tag">By Style</span>
+          <h3>Moody Bedroom Makeover Guide</h3>
+          <p>Deep tones, layered textures, and warm lighting come together in this guide to building a moody, romantic bedroom that still feels livable every day.</p>
+          <span class="article-link">Read the Guide</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="philosophy">
+  <div class="wrap">
+    <blockquote>"A beautiful home isn't about how much you spend. It's about how intentionally you choose."</blockquote>
+    <cite>The RoomReset Philosophy</cite>
+  </div>
+</section>
+
+<section class="newsletter">
+  <div class="wrap">
+    <h2>Get new room ideas in your inbox</h2>
+    <p>A short, honest roundup of the newest guides, budget finds, and seasonal decor ideas, sent only when there is something worth sharing.</p>
+    <form class="newsletter-form">
+      <input type="email" placeholder="Your email address" required>
+      <button type="submit">Subscribe</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a href="index.html" class="logo">Room<em>Reset</em></a>
+        <p style="margin-top: 18px;">Practical, beautiful ideas for creating a home that feels expensive, intentional, and entirely your own, all without stretching your budget further than it needs to go.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="bedroom-ideas/index.html">Room Ideas</a></li>
+          <li><a href="organization/index.html">Organization</a></li>
+          <li><a href="budget-decor/index.html">Budget Decor</a></li>
+          <li><a href="by-style/index.html">By Style</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Site</h4>
+        <ul>
+          <li><a href="about-us/index.html">About Us</a></li>
+          <li><a href="mailto:cawdimaddi@gmail.com">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy-policy/index.html">Privacy Policy</a></li>
+          <li><a href="terms-conditions/index.html">Terms and Conditions</a></li>
+          <li><a href="affiliate-disclosure/index.html">Affiliate Disclosure</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 RoomReset. All rights reserved.</p>
+      <div class="social-links">
+        <a href="#" aria-label="Pinterest">P</a>
+        <a href="#" aria-label="Instagram">I</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
