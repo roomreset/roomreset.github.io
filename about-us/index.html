@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us | RoomReset</title>
+<meta name="description" content="RoomReset is a home decor and organization guide built for anyone who wants their space to feel calm, beautiful, and intentional without overspending to get there.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blush: #f3e6e2;
+    --blush-deep: #e3c2ba;
+    --sage: #a9b29a;
+    --sage-deep: #7c8a6c;
+    --cream: #faf6f1;
+    --charcoal: #3a3530;
+    --ink-soft: #6b6258;
+    --line: #e8ddd4;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background-color: var(--cream);
+    color: var(--charcoal);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    color: var(--charcoal);
+    line-height: 1.3;
+  }
+
+  a { text-decoration: none; color: inherit; }
+
+  .wrap {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  .page-wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  header {
+    padding: 28px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  .logo em {
+    font-style: italic;
+    color: var(--sage-deep);
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 36px;
+  }
+
+  nav a {
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    transition: color 0.2s ease;
+  }
+
+  nav a:hover { color: var(--sage-deep); }
+
+  /* Page hero */
+  .page-hero {
+    background: linear-gradient(180deg, var(--blush) 0%, var(--cream) 100%);
+    padding: 80px 0 70px;
+    text-align: center;
+  }
+
+  .page-eyebrow {
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--sage-deep);
+    margin-bottom: 18px;
+    display: block;
+  }
+
+  .page-hero h1 {
+    font-size: 44px;
+    margin-bottom: 20px;
+  }
+
+  .page-hero p {
+    font-size: 17px;
+    color: var(--ink-soft);
+    max-width: 580px;
+    margin: 0 auto;
+    line-height: 1.8;
+  }
+
+  /* Body content */
+  .page-body {
+    padding: 70px 0 100px;
+  }
+
+  .page-body p {
+    font-size: 17px;
+    color: var(--charcoal);
+    margin-bottom: 28px;
+    line-height: 1.85;
+  }
+
+  .page-body h2 {
+    font-size: 28px;
+    margin: 52px 0 18px;
+  }
+
+  .page-body h3 {
+    font-size: 20px;
+    color: var(--sage-deep);
+    margin: 36px 0 14px;
+  }
+
+  /* Values grid */
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin: 36px 0 52px;
+  }
+
+  .value-card {
+    background-color: var(--blush);
+    border-radius: 6px;
+    padding: 28px;
+  }
+
+  .value-card h3 {
+    font-size: 18px;
+    margin: 0 0 10px;
+    color: var(--charcoal);
+  }
+
+  .value-card p {
+    font-size: 15px;
+    color: var(--ink-soft);
+    margin: 0;
+    line-height: 1.75;
+  }
+
+  /* Quote band */
+  .about-quote {
+    background-color: var(--sage);
+    padding: 60px 32px;
+    text-align: center;
+    margin: 60px 0;
+    border-radius: 6px;
+  }
+
+  .about-quote blockquote {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 26px;
+    color: var(--cream);
+    max-width: 620px;
+    margin: 0 auto;
+    line-height: 1.55;
+  }
+
+  /* Contact strip */
+  .contact-strip {
+    background-color: var(--blush);
+    border-radius: 6px;
+    padding: 36px;
+    text-align: center;
+    margin-top: 60px;
+  }
+
+  .contact-strip h2 {
+    font-size: 24px;
+    margin-bottom: 14px;
+  }
+
+  .contact-strip p {
+    font-size: 15px;
+    color: var(--ink-soft);
+    margin-bottom: 22px;
+    line-height: 1.75;
+  }
+
+  .contact-strip a.btn {
+    display: inline-block;
+    padding: 13px 30px;
+    background-color: var(--charcoal);
+    color: var(--cream);
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    transition: background-color 0.2s ease;
+  }
+
+  .contact-strip a.btn:hover {
+    background-color: var(--sage-deep);
+  }
+
+  footer {
+    padding: 70px 0 40px;
+    border-top: 1px solid var(--line);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 60px;
+  }
+
+  .footer-grid h4 {
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    margin-bottom: 18px;
+    font-family: 'Jost', sans-serif;
+    font-weight: 500;
+  }
+
+  .footer-grid p {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.8;
+    max-width: 320px;
+  }
+
+  .footer-grid ul { list-style: none; }
+  .footer-grid li { margin-bottom: 12px; }
+
+  .footer-grid a {
+    font-size: 14px;
+    color: var(--ink-soft);
+    transition: color 0.2s ease;
+  }
+
+  .footer-grid a:hover { color: var(--sage-deep); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 30px;
+    border-top: 1px solid var(--line);
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-bottom p {
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  .social-links { display: flex; gap: 18px; }
+
+  .social-links a {
+    width: 38px;
+    height: 38px;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: var(--ink-soft);
+    transition: all 0.2s ease;
+  }
+
+  .social-links a:hover {
+    background-color: var(--charcoal);
+    color: var(--cream);
+    border-color: var(--charcoal);
+  }
+
+  @media (max-width: 900px) {
+    nav { display: none; }
+    .page-hero h1 { font-size: 34px; }
+    .values-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 560px) {
+    .footer-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap header-inner">
+    <a href="../index.html" class="logo">Room<em>Reset</em></a>
+    <nav>
+      <ul>
+        <li><a href="../index.html#categories">Room Ideas</a></li>
+        <li><a href="../index.html#articles">Organization</a></li>
+        <li><a href="../index.html#articles">Budget Decor</a></li>
+        <li><a href="index.html">About</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="page-wrap">
+    <span class="page-eyebrow">Who we are</span>
+    <h1>About RoomReset</h1>
+    <p>A home decor and organization guide built for people who want their space to feel calm, beautiful, and completely their own, without needing a large budget or a designer to get there.</p>
+  </div>
+</section>
+
+<section class="page-body">
+  <div class="page-wrap">
+
+    <p>RoomReset was created out of a simple frustration: most home decor content online is either aimed at people with unlimited budgets, or it is so generic that it could apply to any room in any country and ends up being useful to nobody in particular. We wanted something more honest than that. A guide that starts from the reality most people are actually living in, a modest amount of money, a small or imperfect space, and a genuine desire to make it feel better without turning it into a renovation project.</p>
+
+    <p>Every article on this site is written with one question in mind: what is the single most effective thing someone can do to improve this room today, with what they can reasonably afford? That question shapes everything from the products we recommend to the way we explain each idea. We never recommend something because it looks good in a photoshoot. We recommend it because it genuinely earns its place in a real room.</p>
+
+    <div class="about-quote">
+      <blockquote>"A beautiful home is not about how much you spend. It is about how intentionally you choose."</blockquote>
+    </div>
+
+    <h2>What We Cover</h2>
+
+    <p>RoomReset covers the full range of home improvement that does not require a contractor or a credit card limit you would rather not think about. Our content falls into six main areas, each chosen because it represents a part of the home where a small investment of time and money tends to produce a disproportionately large improvement in how the space looks and feels.</p>
+
+    <div class="values-grid">
+      <div class="value-card">
+        <h3>Room Ideas</h3>
+        <p>Full bedroom, living room, and kitchen guides that walk through the most impactful changes you can make to each space, from lighting to textiles to furniture arrangement.</p>
+      </div>
+      <div class="value-card">
+        <h3>Organization</h3>
+        <p>Practical systems for fridges, closets, laundry rooms, and desks that look good and stay that way, because an organized space is only useful if you can actually maintain it.</p>
+      </div>
+      <div class="value-card">
+        <h3>Budget Decor</h3>
+        <p>Curated product roundups sorted by price point so you always know exactly what fits your budget before you start reading, with honest notes on what is worth it and what is not.</p>
+      </div>
+      <div class="value-card">
+        <h3>By Style</h3>
+        <p>Aesthetic specific guides for cottagecore, moody, minimalist, Art Deco, and more, so you can build toward a look that feels consistent rather than randomly assembled.</p>
+      </div>
+      <div class="value-card">
+        <h3>Small Spaces</h3>
+        <p>Ideas specifically designed for apartments, shared spaces, and rooms where every square foot counts, including reading nooks, balconies, and single room studio setups.</p>
+      </div>
+      <div class="value-card">
+        <h3>Shop Picks</h3>
+        <p>Handpicked product lists from Amazon India organized by room and style, each chosen because it delivers good quality at a price that makes sense for the average home budget.</p>
+      </div>
+    </div>
+
+    <h2>How We Choose What We Recommend</h2>
+
+    <p>Every product recommendation on RoomReset goes through the same basic test before it makes it onto the site. Does it do what it claims to do, does it look good in a real home setting rather than just a staged photo, is the price genuinely reasonable for what you are getting, and does it have enough reviews from real buyers to give us confidence that it holds up over time. Products that pass all four questions make the cut. Products that fail any one of them do not appear here, regardless of commission rates or brand partnerships.</p>
+
+    <p>We also update our recommendations regularly. Home products change, prices shift, and things go in and out of stock. An out of date recommendation that leads you to a discontinued product or a price that no longer reflects reality is not useful to anyone, so we treat our articles as living documents rather than one and done posts.</p>
+
+    <h2>A Note on Affiliate Links</h2>
+
+    <p>Some of the links on RoomReset are affiliate links, which means we earn a small commission if you make a purchase through them at no extra cost to you. This is how the site sustains itself and allows us to keep publishing free content. We never recommend a product specifically because of the commission it earns, and we never allow affiliate arrangements to influence our editorial judgment. You can read the full details of how this works in our <a href="../affiliate-disclosure/index.html" style="color: var(--sage-deep); text-decoration: underline;">affiliate disclosure</a>.</p>
+
+    <div class="contact-strip">
+      <h2>Get In Touch</h2>
+      <p>If you have a question about a recommendation, want to suggest a topic, or just want to say hello, we would genuinely love to hear from you. Every message gets read even when we are slow to reply.</p>
+      <a href="mailto:cawdimaddi@gmail.com" class="btn">Send a Message</a>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a href="../index.html" class="logo">Room<em>Reset</em></a>
+        <p style="margin-top: 18px;">Practical, beautiful ideas for creating a home that feels expensive, intentional, and entirely your own, all without stretching your budget further than it needs to go.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="../bedroom-ideas/index.html">Room Ideas</a></li>
+          <li><a href="../organization/index.html">Organization</a></li>
+          <li><a href="../budget-decor/index.html">Budget Decor</a></li>
+          <li><a href="../by-style/index.html">By Style</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Site</h4>
+        <ul>
+          <li><a href="index.html">About Us</a></li>
+          <li><a href="mailto:cawdimaddi@gmail.com">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="../privacy-policy/index.html">Privacy Policy</a></li>
+          <li><a href="../terms-conditions/index.html">Terms and Conditions</a></li>
+          <li><a href="../affiliate-disclosure/index.html">Affiliate Disclosure</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 RoomReset. All rights reserved.</p>
+      <div class="social-links">
+        <a href="#" aria-label="Pinterest">P</a>
+        <a href="#" aria-label="Instagram">I</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
