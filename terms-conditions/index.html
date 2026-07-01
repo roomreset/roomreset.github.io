@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms and Conditions | RoomReset</title>
+<meta name="description" content="RoomReset Terms and Conditions explaining the rules and guidelines for using this website and its content.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blush: #f3e6e2;
+    --blush-deep: #e3c2ba;
+    --sage: #a9b29a;
+    --sage-deep: #7c8a6c;
+    --cream: #faf6f1;
+    --charcoal: #3a3530;
+    --ink-soft: #6b6258;
+    --line: #e8ddd4;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background-color: var(--cream);
+    color: var(--charcoal);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    color: var(--charcoal);
+    line-height: 1.3;
+  }
+
+  a { text-decoration: none; color: inherit; }
+
+  .wrap {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  .page-wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  header {
+    padding: 28px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  .logo em {
+    font-style: italic;
+    color: var(--sage-deep);
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 36px;
+  }
+
+  nav a {
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    transition: color 0.2s ease;
+  }
+
+  nav a:hover { color: var(--sage-deep); }
+
+  .page-hero {
+    background: linear-gradient(180deg, var(--blush) 0%, var(--cream) 100%);
+    padding: 80px 0 70px;
+    text-align: center;
+  }
+
+  .page-eyebrow {
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--sage-deep);
+    margin-bottom: 18px;
+    display: block;
+  }
+
+  .page-hero h1 {
+    font-size: 44px;
+    margin-bottom: 20px;
+  }
+
+  .page-hero p {
+    font-size: 15px;
+    color: var(--ink-soft);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.8;
+  }
+
+  .page-body {
+    padding: 70px 0 100px;
+  }
+
+  .page-body p {
+    font-size: 16.5px;
+    color: var(--charcoal);
+    margin-bottom: 24px;
+    line-height: 1.85;
+  }
+
+  .page-body h2 {
+    font-size: 26px;
+    margin: 52px 0 16px;
+  }
+
+  .page-body ul {
+    margin: 0 0 24px 22px;
+  }
+
+  .page-body li {
+    font-size: 16.5px;
+    color: var(--charcoal);
+    margin-bottom: 10px;
+    line-height: 1.8;
+  }
+
+  .last-updated {
+    font-size: 14px;
+    color: var(--ink-soft);
+    background-color: var(--blush);
+    padding: 14px 20px;
+    border-radius: 4px;
+    margin-bottom: 40px;
+  }
+
+  .terms-highlight {
+    background-color: var(--blush);
+    border-left: 3px solid var(--sage-deep);
+    padding: 24px 28px;
+    border-radius: 0 6px 6px 0;
+    margin: 36px 0;
+  }
+
+  .terms-highlight p {
+    font-size: 16px;
+    margin: 0;
+    color: var(--charcoal);
+    line-height: 1.8;
+  }
+
+  .inline-link {
+    color: var(--sage-deep);
+    text-decoration: underline;
+  }
+
+  footer {
+    padding: 70px 0 40px;
+    border-top: 1px solid var(--line);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 60px;
+  }
+
+  .footer-grid h4 {
+    font-size: 14px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    margin-bottom: 18px;
+    font-family: 'Jost', sans-serif;
+    font-weight: 500;
+  }
+
+  .footer-grid p {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.8;
+    max-width: 320px;
+  }
+
+  .footer-grid ul { list-style: none; }
+  .footer-grid li { margin-bottom: 12px; }
+
+  .footer-grid a {
+    font-size: 14px;
+    color: var(--ink-soft);
+    transition: color 0.2s ease;
+  }
+
+  .footer-grid a:hover { color: var(--sage-deep); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 30px;
+    border-top: 1px solid var(--line);
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-bottom p {
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  .social-links { display: flex; gap: 18px; }
+
+  .social-links a {
+    width: 38px;
+    height: 38px;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: var(--ink-soft);
+    transition: all 0.2s ease;
+  }
+
+  .social-links a:hover {
+    background-color: var(--charcoal);
+    color: var(--cream);
+    border-color: var(--charcoal);
+  }
+
+  @media (max-width: 900px) {
+    nav { display: none; }
+    .page-hero h1 { font-size: 34px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 560px) {
+    .footer-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap header-inner">
+    <a href="../index.html" class="logo">Room<em>Reset</em></a>
+    <nav>
+      <ul>
+        <li><a href="../index.html#categories">Room Ideas</a></li>
+        <li><a href="../index.html#articles">Organization</a></li>
+        <li><a href="../index.html#articles">Budget Decor</a></li>
+        <li><a href="../about-us/index.html">About</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="page-hero">
+  <div class="page-wrap">
+    <span class="page-eyebrow">Legal</span>
+    <h1>Terms and Conditions</h1>
+    <p>Please read these terms carefully before using RoomReset. By accessing and browsing this website, you confirm that you have read, understood, and agree to be bound by these terms.</p>
+  </div>
+</section>
+
+<section class="page-body">
+  <div class="page-wrap">
+
+    <p class="last-updated">Last updated: July 1, 2026</p>
+
+    <p>These Terms and Conditions govern your use of the RoomReset website located at roomreset.github.io (referred to throughout this document as "RoomReset," "the site," "we," "us," or "our"). By visiting, browsing, or otherwise using this website, you agree to these terms in full. If you disagree with any part of these terms, you must stop using this website immediately.</p>
+
+    <p>We reserve the right to update or modify these terms at any time without prior notice. Changes will be reflected by updating the date at the top of this page. It is your responsibility to check back periodically if you wish to stay informed of any updates. Continued use of the site after changes are posted constitutes your acceptance of those changes.</p>
+
+    <div class="terms-highlight">
+      <p>The content published on RoomReset is intended for general informational and inspirational purposes only. Nothing on this site constitutes professional interior design advice, financial advice, or any other form of regulated professional guidance. Always use your own judgment when making purchasing decisions for your home.</p>
+    </div>
+
+    <h2>Use of This Website</h2>
+
+    <p>RoomReset grants you a limited, non-exclusive, non-transferable license to access and use this website for your own personal, non-commercial purposes. You may browse the content, follow links, and read articles for your own private use. You may not use this website or its content for any commercial purpose without our express written permission.</p>
+
+    <p>You agree not to use this website in any way that could damage, disable, overburden, or impair the site or its servers. You agree not to attempt to gain unauthorized access to any part of the website, the server on which it is hosted, or any other server, computer, or database connected to RoomReset. You agree not to use automated tools such as scrapers or bots to harvest content from this website in bulk.</p>
+
+    <h2>Intellectual Property and Content Ownership</h2>
+
+    <p>All content published on RoomReset, including but not limited to written articles, guides, product descriptions, page designs, and the overall look and feel of the site, is the intellectual property of RoomReset and is protected under applicable copyright law. You may not reproduce, redistribute, republish, copy, or modify any content from this site without our prior written permission.</p>
+
+    <p>You are welcome to share individual articles by linking to them directly on social media, in emails, or on your own website. Sharing a link to our content is always welcome. What is not permitted is copying the text, images, or structure of our articles and republishing them as your own, whether on a website, a social media account, or anywhere else.</p>
+
+    <p>If you wish to quote a short passage from an article for editorial or educational purposes, you may do so provided you clearly attribute the quote to RoomReset and include a link back to the original article. Extended reproduction of our content without permission is a violation of these terms and applicable copyright law.</p>
+
+    <h2>Accuracy of Information</h2>
+
+    <p>We make every reasonable effort to ensure that the information published on RoomReset is accurate, current, and genuinely useful at the time of publication. However, home decor trends, product availability, and prices change regularly, and we cannot guarantee that every piece of information on this site remains accurate at all times after it is published.</p>
+
+    <p>Product recommendations are based on research and publicly available information at the time of writing. We do not physically test every product we recommend. Prices listed in articles are approximate and subject to change. Always verify pricing, availability, and specifications directly on Amazon or with the relevant retailer before making a purchase.</p>
+
+    <p>RoomReset makes no warranties or representations of any kind, express or implied, about the completeness, accuracy, reliability, suitability, or availability of any information, product, or related content contained on this site. Any reliance you place on the information published here is strictly at your own risk.</p>
+
+    <h2>Affiliate Links and Third Party Websites</h2>
+
+    <p>RoomReset participates in the Amazon Associates Program and may earn a commission when you click affiliate links on this site and make a qualifying purchase. This is explained in full in our <a href="../affiliate-disclosure/index.html" class="inline-link">Affiliate Disclosure</a>. The presence of an affiliate link does not constitute an endorsement beyond the specific recommendation made in the relevant article.</p>
+
+    <p>This website contains links to third party websites, primarily Amazon India product pages but also occasionally other external sources. These links are provided for your convenience and reference only. RoomReset has no control over the content, policies, or practices of any third party website and accepts no responsibility for them. Clicking an external link and leaving RoomReset means you are subject to the terms and policies of the website you have visited, not those of RoomReset.</p>
+
+    <h2>Limitation of Liability</h2>
+
+    <p>To the fullest extent permitted by applicable law, RoomReset and its operators shall not be liable for any direct, indirect, incidental, consequential, or punitive damages arising from your use of or inability to use this website, your reliance on any content published here, or any transaction you enter into as a result of visiting this site. This includes but is not limited to damages arising from purchasing a product based on a recommendation found on RoomReset, technical errors or downtime affecting access to the site, and any loss of data.</p>
+
+    <p>Our liability to you in any and all circumstances is limited to the maximum extent permitted by law. If you are dissatisfied with any part of this website or these terms, your only remedy is to stop using the site.</p>
+
+    <h2>Comments and User Submitted Content</h2>
+
+    <p>If RoomReset enables any feature in the future that allows visitors to submit comments, messages, or other content, you agree that any content you submit will not be unlawful, abusive, defamatory, obscene, or otherwise objectionable. You grant RoomReset a non-exclusive, royalty-free license to use, display, and remove any content you submit through the site. We reserve the right to remove any user submitted content at our sole discretion and without notice.</p>
+
+    <h2>Privacy</h2>
+
+    <p>Your use of this website is also governed by our <a href="../privacy-policy/index.html" class="inline-link">Privacy Policy</a>, which is incorporated into these Terms and Conditions by reference. By using this site you also agree to the terms of our Privacy Policy. Please read it carefully to understand how we collect and handle information from visitors to RoomReset.</p>
+
+    <h2>Governing Law</h2>
+
+    <p>These Terms and Conditions are governed by and construed in accordance with the laws of India. Any disputes arising in connection with these terms or your use of this website shall be subject to the exclusive jurisdiction of the courts of India. If any provision of these terms is found to be unenforceable or invalid under applicable law, that provision will be modified to the minimum extent necessary to make it enforceable, and the remaining provisions will continue in full force and effect.</p>
+
+    <h2>Contact Us</h2>
+
+    <p>If you have any questions about these Terms and Conditions or about anything else related to your use of RoomReset, please contact us at <a href="mailto:roomrest6@gmail.com" class="inline-link">roomreset6@gmail.com</a>. We will do our best to respond to all enquiries in a reasonable time.</p>
+
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a href="../index.html" class="logo">Room<em>Reset</em></a>
+        <p style="margin-top: 18px;">Practical, beautiful ideas for creating a home that feels expensive, intentional, and entirely your own, all without stretching your budget further than it needs to go.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="../bedroom-ideas/index.html">Room Ideas</a></li>
+          <li><a href="../organization/index.html">Organization</a></li>
+          <li><a href="../budget-decor/index.html">Budget Decor</a></li>
+          <li><a href="../by-style/index.html">By Style</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Site</h4>
+        <ul>
+          <li><a href="../about-us/index.html">About Us</a></li>
+          <li><a href="mailto:cawdimaddi@gmail.com">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="../privacy-policy/index.html">Privacy Policy</a></li>
+          <li><a href="index.html">Terms and Conditions</a></li>
+          <li><a href="../affiliate-disclosure/index.html">Affiliate Disclosure</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 RoomReset. All rights reserved.</p>
+      <div class="social-links">
+        <a href="#" aria-label="Pinterest">P</a>
+        <a href="#" aria-label="Instagram">I</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
