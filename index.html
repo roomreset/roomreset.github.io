@@ -11,16 +11,19 @@
 <style>
   :root {
     --blush: #f3e6e2;
-    --blush-deep: #e3c2ba;
+    --blush-mid: #eacfc8;
     --sage: #a9b29a;
     --sage-deep: #7c8a6c;
     --cream: #faf6f1;
     --charcoal: #3a3530;
     --ink-soft: #6b6258;
     --line: #e8ddd4;
+    --white: #ffffff;
   }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
 
   body {
     font-family: 'Jost', sans-serif;
@@ -28,174 +31,380 @@
     color: var(--charcoal);
     line-height: 1.7;
     font-weight: 300;
+    overflow-x: hidden;
   }
 
   h1, h2, h3, h4 {
     font-family: 'Playfair Display', serif;
     font-weight: 500;
     color: var(--charcoal);
-    line-height: 1.25;
+    line-height: 1.2;
   }
 
   a { text-decoration: none; color: inherit; }
-  img { display: block; max-width: 100%; }
+  img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
-  .wrap {
-    max-width: 1140px;
-    margin: 0 auto;
-    padding: 0 32px;
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 40px; }
+
+  /* ── REDUCED MOTION ── */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
   }
 
+  /* ── HEADER ── */
   header {
-    padding: 28px 0;
-    border-bottom: 1px solid var(--line);
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 0;
+    transition: background 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  header.scrolled {
+    background: rgba(250, 246, 241, 0.96);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 1px 0 var(--line);
   }
 
   .header-inner {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 72px;
   }
 
   .logo {
     font-family: 'Playfair Display', serif;
-    font-size: 26px;
+    font-size: 24px;
     font-weight: 600;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.3px;
+    color: var(--white);
+    transition: color 0.4s ease;
   }
 
-  .logo em {
-    font-style: italic;
-    color: var(--sage-deep);
-  }
+  header.scrolled .logo { color: var(--charcoal); }
 
-  nav ul {
-    list-style: none;
-    display: flex;
-    gap: 36px;
-  }
+  .logo em { font-style: italic; color: var(--blush-mid); transition: color 0.4s ease; }
+  header.scrolled .logo em { color: var(--sage-deep); }
+
+  nav ul { list-style: none; display: flex; gap: 38px; }
 
   nav a {
-    font-size: 14px;
-    letter-spacing: 0.04em;
+    font-size: 13px;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--ink-soft);
-    transition: color 0.2s ease;
+    color: rgba(255,255,255,0.85);
+    transition: color 0.3s ease;
+    font-weight: 400;
   }
 
-  nav a:hover { color: var(--sage-deep); }
+  header.scrolled nav a { color: var(--ink-soft); }
+  nav a:hover { color: var(--white) !important; }
+  header.scrolled nav a:hover { color: var(--sage-deep) !important; }
 
+  /* ── HERO ── */
   .hero {
-    padding: 90px 0 100px;
-    text-align: center;
-    background: linear-gradient(180deg, var(--blush) 0%, var(--cream) 100%);
+    position: relative;
+    height: 100vh;
+    min-height: 640px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  /* Hero background image slot */
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-color: #c9b5aa;
+    /* REPLACE background-color with: background-image: url('images/hero-bg.jpg'); */
+    background-size: cover;
+    background-position: center;
+    transform: scale(1.06);
+    animation: heroZoom 12s ease-out forwards;
+  }
+
+  @keyframes heroZoom {
+    from { transform: scale(1.06); }
+    to   { transform: scale(1.00); }
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(58, 53, 48, 0.62) 0%,
+      rgba(58, 53, 48, 0.28) 60%,
+      rgba(169, 178, 154, 0.18) 100%
+    );
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 760px;
+    padding-top: 72px;
+    opacity: 0;
+    transform: translateY(28px);
+    animation: fadeUp 1s ease 0.4s forwards;
+  }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
   }
 
   .hero-eyebrow {
-    font-size: 13px;
-    letter-spacing: 0.18em;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 12px;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: var(--sage-deep);
-    margin-bottom: 22px;
+    color: var(--blush-mid);
+    margin-bottom: 26px;
+    font-weight: 400;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
     display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--blush-mid);
   }
 
   .hero h1 {
-    font-size: 56px;
-    max-width: 780px;
-    margin: 0 auto 28px;
+    font-size: clamp(36px, 5.5vw, 64px);
+    color: var(--white);
+    font-weight: 500;
+    margin-bottom: 28px;
+    line-height: 1.15;
   }
 
-  .hero h1 em {
-    font-style: italic;
-    color: var(--sage-deep);
-  }
+  .hero h1 em { font-style: italic; color: var(--blush-mid); }
 
-  .hero p {
-    max-width: 620px;
-    margin: 0 auto 38px;
+  .hero-desc {
     font-size: 17px;
-    color: var(--ink-soft);
-    line-height: 1.8;
+    color: rgba(255,255,255,0.82);
+    line-height: 1.85;
+    max-width: 560px;
+    margin-bottom: 42px;
   }
 
-  .hero-actions {
-    display: flex;
-    gap: 18px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
+  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
 
   .btn {
     display: inline-block;
-    padding: 14px 32px;
-    font-size: 14px;
-    letter-spacing: 0.05em;
+    padding: 15px 34px;
+    font-size: 13px;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     border-radius: 2px;
-    transition: all 0.25s ease;
+    transition: all 0.28s ease;
+    font-weight: 400;
   }
 
-  .btn-primary {
-    background-color: var(--charcoal);
-    color: var(--cream);
-  }
-
-  .btn-primary:hover {
-    background-color: var(--sage-deep);
-  }
-
-  .btn-outline {
-    border: 1px solid var(--charcoal);
+  .btn-light {
+    background: var(--white);
     color: var(--charcoal);
   }
 
-  .btn-outline:hover {
-    background-color: var(--charcoal);
-    color: var(--cream);
+  .btn-light:hover {
+    background: var(--blush-mid);
+    color: var(--charcoal);
   }
 
+  .btn-ghost {
+    border: 1px solid rgba(255,255,255,0.6);
+    color: var(--white);
+  }
+
+  .btn-ghost:hover {
+    background: rgba(255,255,255,0.15);
+    border-color: var(--white);
+  }
+
+  /* Hero scroll cue */
+  .hero-scroll {
+    position: absolute;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.2s forwards;
+  }
+
+  .hero-scroll span {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent);
+    animation: scrollPulse 2s ease-in-out 1.6s infinite;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.2); }
+  }
+
+  /* ── STATS ── */
   .stats {
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
-    padding: 36px 0;
+    background: var(--charcoal);
+    padding: 0;
   }
 
   .stats-inner {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    gap: 24px;
-    text-align: center;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
   }
+
+  .stat-item {
+    padding: 36px 28px;
+    text-align: center;
+    border-right: 1px solid rgba(255,255,255,0.08);
+    transition: background 0.3s ease;
+  }
+
+  .stat-item:last-child { border-right: none; }
+  .stat-item:hover { background: rgba(255,255,255,0.04); }
 
   .stat-num {
     font-family: 'Playfair Display', serif;
-    font-size: 30px;
-    color: var(--sage-deep);
+    font-size: 32px;
+    color: var(--blush-mid);
+    display: block;
+    line-height: 1;
+    margin-bottom: 8px;
   }
 
   .stat-label {
-    font-size: 13px;
-    color: var(--ink-soft);
-    letter-spacing: 0.04em;
+    font-size: 12px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    margin-top: 6px;
   }
 
-  .section {
-    padding: 100px 0;
+  /* ── INTRO BAND ── */
+  .intro-band {
+    padding: 110px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  /* Intro image slot */
+  .intro-img {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    border-radius: 3px;
+    overflow: hidden;
+    background-color: #d4bdb5;
+    /* REPLACE background-color with: background-image: url('images/intro-room.jpg'); */
+    background-size: cover;
+    background-position: center;
+  }
+
+  .intro-img::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 3px;
+    pointer-events: none;
+  }
+
+  /* Floating accent badge */
+  .intro-badge {
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    width: 110px;
+    height: 110px;
+    background: var(--sage);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.12);
+  }
+
+  .intro-badge span:first-child {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    color: var(--white);
+    line-height: 1;
+  }
+
+  .intro-badge span:last-child {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.75);
+    margin-top: 4px;
+  }
+
+  .intro-text .eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--sage-deep);
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .intro-text h2 {
+    font-size: clamp(28px, 3vw, 40px);
+    margin-bottom: 24px;
+    line-height: 1.2;
+  }
+
+  .intro-text h2 em { font-style: italic; color: var(--sage-deep); }
+
+  .intro-text p {
+    font-size: 16.5px;
+    color: var(--ink-soft);
+    line-height: 1.85;
+    margin-bottom: 20px;
+  }
+
+  .intro-text .btn-primary {
+    background: var(--charcoal);
+    color: var(--white);
+    margin-top: 14px;
+    display: inline-block;
+  }
+
+  .intro-text .btn-primary:hover { background: var(--sage-deep); }
+
+  /* ── CATEGORIES ── */
+  .categories-section {
+    padding: 0 0 110px;
   }
 
   .section-head {
     text-align: center;
-    max-width: 640px;
+    max-width: 580px;
     margin: 0 auto 60px;
   }
 
   .section-eyebrow {
-    font-size: 13px;
-    letter-spacing: 0.18em;
+    font-size: 12px;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--sage-deep);
     margin-bottom: 16px;
@@ -203,324 +412,569 @@
   }
 
   .section-head h2 {
-    font-size: 38px;
-    margin-bottom: 18px;
+    font-size: clamp(26px, 3vw, 38px);
+    margin-bottom: 16px;
   }
 
   .section-head p {
-    color: var(--ink-soft);
     font-size: 16px;
+    color: var(--ink-soft);
     line-height: 1.8;
   }
 
   .categories-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 28px;
+    gap: 24px;
   }
 
   .category-card {
     position: relative;
-    border-radius: 4px;
+    border-radius: 3px;
     overflow: hidden;
-    aspect-ratio: 4 / 5;
-    background-size: cover;
-    background-position: center;
+    aspect-ratio: 3 / 4;
     display: flex;
     align-items: flex-end;
-    transition: transform 0.4s ease;
+    cursor: pointer;
   }
 
-  .category-card:hover {
-    transform: translateY(-6px);
-  }
-
-  .category-overlay {
-    background: linear-gradient(180deg, rgba(58,53,48,0) 30%, rgba(58,53,48,0.78) 100%);
-    width: 100%;
-    height: 100%;
+  /* Category image slots */
+  .category-card .cat-img {
     position: absolute;
-    top: 0;
-    left: 0;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.6s ease;
   }
 
-  .category-content {
+  /* Individual category placeholder colors — replace with background-image */
+  .cat-bedroom   .cat-img { background-color: #c9a89e; /* url('images/cat-room.jpg') */ }
+  .cat-organization .cat-img { background-color: #b5be9e; /* url('images/cat-org.jpg') */ }
+  .cat-budget    .cat-img { background-color: #d4b8aa; /* url('images/cat-budget.jpg') */ }
+  .cat-style     .cat-img { background-color: #a8b08c; /* url('images/cat-style.jpg') */ }
+  .cat-small     .cat-img { background-color: #c8b4a4; /* url('images/cat-small.jpg') */ }
+  .cat-shop      .cat-img { background-color: #9ca882; /* url('images/cat-shop.jpg') */ }
+
+  .category-card:hover .cat-img { transform: scale(1.06); }
+
+  .cat-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 35%, rgba(40,35,30,0.82) 100%);
+    transition: opacity 0.4s ease;
+  }
+
+  .cat-content {
     position: relative;
-    padding: 28px;
-    color: var(--cream);
     z-index: 2;
+    padding: 28px;
+    width: 100%;
   }
 
-  .category-content h3 {
-    color: var(--cream);
-    font-size: 24px;
-    margin-bottom: 8px;
+  .cat-content h3 {
+    font-size: 22px;
+    color: var(--white);
+    margin-bottom: 7px;
   }
 
-  .category-content p {
+  .cat-content p {
     font-size: 13px;
-    color: var(--blush);
-    letter-spacing: 0.03em;
+    color: rgba(255,255,255,0.72);
+    line-height: 1.5;
   }
 
-  .cat-bedroom { background-color: #d8b6ae; }
-  .cat-organization { background-color: #c3c9b3; }
-  .cat-budget { background-color: #e3c2ba; }
-  .cat-style { background-color: #b3bba0; }
-  .cat-small { background-color: #ddc9bc; }
-  .cat-shop { background-color: #aab394; }
+  .cat-arrow {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    width: 36px;
+    height: 36px;
+    border: 1px solid rgba(255,255,255,0.4);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-size: 14px;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
 
-  .articles-bg {
+  .category-card:hover .cat-arrow {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── FEATURE STRIP ── */
+  /* Full-width editorial image band */
+  .feature-strip {
+    position: relative;
+    height: 480px;
+    overflow: hidden;
+    margin: 0;
+  }
+
+  .feature-strip-img {
+    position: absolute;
+    inset: 0;
+    background-color: #b8a898;
+    /* REPLACE with: background-image: url('images/feature-strip.jpg'); */
+    background-size: cover;
+    background-position: center 40%;
+  }
+
+  .feature-strip-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(58,53,48,0.72) 0%, rgba(58,53,48,0.15) 60%, transparent 100%);
+  }
+
+  .feature-strip-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .feature-strip-content .wrap { width: 100%; }
+
+  .feature-strip-text {
+    max-width: 480px;
+  }
+
+  .feature-strip-text .eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--blush-mid);
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .feature-strip-text h2 {
+    font-size: clamp(28px, 3.5vw, 46px);
+    color: var(--white);
+    margin-bottom: 20px;
+    line-height: 1.18;
+  }
+
+  .feature-strip-text h2 em { font-style: italic; color: var(--blush-mid); }
+
+  .feature-strip-text p {
+    font-size: 16px;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.8;
+    margin-bottom: 28px;
+  }
+
+  /* ── ARTICLES ── */
+  .articles-section {
+    padding: 110px 0;
     background-color: var(--blush);
   }
 
   .articles-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 40px;
+    gap: 36px;
   }
 
   .article-card {
-    background-color: var(--cream);
-    border-radius: 4px;
+    background: var(--white);
+    border-radius: 3px;
+    overflow: hidden;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+  }
+
+  .article-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 48px rgba(58,53,48,0.12);
+  }
+
+  /* Article thumbnail image slots */
+  .article-thumb {
+    aspect-ratio: 4 / 3;
+    position: relative;
     overflow: hidden;
   }
 
-  .article-thumb {
-    aspect-ratio: 4 / 3;
+  .article-thumb-img {
+    position: absolute;
+    inset: 0;
     background-size: cover;
     background-position: center;
+    transition: transform 0.5s ease;
   }
 
-  .thumb-1 { background-color: #cfa89e; }
-  .thumb-2 { background-color: #b7c0a3; }
-  .thumb-3 { background-color: #d9c0ab; }
-  .thumb-4 { background-color: #a3ab8d; }
-  .thumb-5 { background-color: #e0cabb; }
-  .thumb-6 { background-color: #c1ad96; }
+  .article-card:hover .article-thumb-img { transform: scale(1.05); }
 
-  .article-body {
-    padding: 26px 26px 30px;
-  }
+  /* Individual article placeholder colors — replace with background-image */
+  .article-card:nth-child(1) .article-thumb-img { background-color: #c9a89e; /* url('images/article-bedroom.jpg') */ }
+  .article-card:nth-child(2) .article-thumb-img { background-color: #b5be9e; /* url('images/article-fridge.jpg') */ }
+  .article-card:nth-child(3) .article-thumb-img { background-color: #d4b8aa; /* url('images/article-cottage.jpg') */ }
+  .article-card:nth-child(4) .article-thumb-img { background-color: #a8b08c; /* url('images/article-living.jpg') */ }
+  .article-card:nth-child(5) .article-thumb-img { background-color: #c8b4a4; /* url('images/article-nook.jpg') */ }
+  .article-card:nth-child(6) .article-thumb-img { background-color: #9ca882; /* url('images/article-moody.jpg') */ }
+
+  .article-body { padding: 28px 28px 32px; }
 
   .article-tag {
-    font-size: 12px;
-    letter-spacing: 0.06em;
+    font-size: 11px;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--sage-deep);
     margin-bottom: 12px;
     display: block;
+    font-weight: 500;
   }
 
   .article-body h3 {
-    font-size: 21px;
+    font-size: 20px;
     margin-bottom: 12px;
+    line-height: 1.3;
+    transition: color 0.2s ease;
   }
 
+  .article-card:hover h3 { color: var(--sage-deep); }
+
   .article-body p {
-    font-size: 14.5px;
+    font-size: 14px;
     color: var(--ink-soft);
     line-height: 1.75;
-    margin-bottom: 18px;
+    margin-bottom: 20px;
   }
 
   .article-link {
-    font-size: 13px;
-    letter-spacing: 0.04em;
+    font-size: 12px;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--charcoal);
-    border-bottom: 1px solid var(--charcoal);
-    padding-bottom: 2px;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-weight: 500;
+    transition: gap 0.2s ease, color 0.2s ease;
   }
 
+  .article-link::after {
+    content: '→';
+    transition: transform 0.2s ease;
+  }
+
+  .article-card:hover .article-link {
+    gap: 12px;
+    color: var(--sage-deep);
+  }
+
+  /* ── PHILOSOPHY BAND ── */
   .philosophy {
+    padding: 120px 0;
     text-align: center;
-    padding: 110px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .philosophy::before {
+    content: '"';
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Playfair Display', serif;
+    font-size: 260px;
+    color: var(--blush);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
   }
 
   .philosophy blockquote {
     font-family: 'Playfair Display', serif;
     font-style: italic;
-    font-size: 32px;
-    max-width: 760px;
+    font-size: clamp(24px, 3vw, 36px);
+    max-width: 800px;
     margin: 0 auto 24px;
     line-height: 1.5;
-    color: var(--charcoal);
+    position: relative;
   }
 
   .philosophy cite {
     font-style: normal;
-    font-size: 14px;
-    letter-spacing: 0.06em;
+    font-size: 13px;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--sage-deep);
   }
 
+  /* ── MOOD GRID ── */
+  /* Three tall editorial image slots side by side */
+  .mood-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    height: 460px;
+  }
+
+  .mood-item {
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Mood image slots — replace background-color with background-image */
+  .mood-item:nth-child(1) { background-color: #c4aea4; /* url('images/mood-1.jpg') */ }
+  .mood-item:nth-child(2) { background-color: #adb79d; /* url('images/mood-2.jpg') */ }
+  .mood-item:nth-child(3) { background-color: #d0bba8; /* url('images/mood-3.jpg') */ }
+
+  .mood-item-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.7s ease;
+  }
+
+  .mood-item:hover .mood-item-bg { transform: scale(1.05); }
+
+  .mood-item-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 50%, rgba(40,35,30,0.65) 100%);
+  }
+
+  .mood-item-label {
+    position: absolute;
+    bottom: 28px;
+    left: 28px;
+    right: 28px;
+  }
+
+  .mood-item-label span {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.65);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .mood-item-label h3 {
+    font-size: 22px;
+    color: var(--white);
+    font-style: italic;
+  }
+
+  /* ── NEWSLETTER ── */
   .newsletter {
-    background-color: var(--sage);
-    padding: 80px 0;
+    background: var(--sage);
+    padding: 90px 0;
     text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .newsletter::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 280px; height: 280px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 50%;
+  }
+
+  .newsletter::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: -40px;
+    width: 220px; height: 220px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 50%;
   }
 
   .newsletter h2 {
-    color: var(--cream);
-    font-size: 32px;
-    margin-bottom: 16px;
+    font-size: clamp(26px, 3vw, 36px);
+    color: var(--white);
+    margin-bottom: 14px;
+    position: relative;
   }
 
   .newsletter p {
-    color: var(--cream);
-    opacity: 0.92;
-    max-width: 540px;
-    margin: 0 auto 32px;
-    font-size: 15.5px;
+    color: rgba(255,255,255,0.88);
+    max-width: 500px;
+    margin: 0 auto 36px;
+    font-size: 16px;
     line-height: 1.8;
+    position: relative;
   }
 
   .newsletter-form {
     display: flex;
     justify-content: center;
-    gap: 0;
-    max-width: 440px;
+    max-width: 420px;
     margin: 0 auto;
+    position: relative;
+    border: 1px solid rgba(255,255,255,0.35);
+    border-radius: 2px;
+    overflow: hidden;
   }
 
   .newsletter-form input {
     flex: 1;
-    padding: 15px 20px;
+    padding: 17px 22px;
     border: none;
     font-family: 'Jost', sans-serif;
     font-size: 14px;
-    background-color: var(--cream);
-    color: var(--charcoal);
+    background: rgba(255,255,255,0.12);
+    color: var(--white);
+    outline: none;
   }
+
+  .newsletter-form input::placeholder { color: rgba(255,255,255,0.55); }
 
   .newsletter-form button {
-    padding: 15px 28px;
-    background-color: var(--charcoal);
-    color: var(--cream);
+    padding: 17px 28px;
+    background: var(--charcoal);
+    color: var(--white);
     border: none;
     font-family: 'Jost', sans-serif;
-    font-size: 13px;
-    letter-spacing: 0.05em;
+    font-size: 12px;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     cursor: pointer;
-    transition: background-color 0.25s ease;
+    transition: background 0.25s ease;
+    white-space: nowrap;
   }
 
-  .newsletter-form button:hover {
-    background-color: var(--ink-soft);
-  }
+  .newsletter-form button:hover { background: rgba(58,53,48,0.75); }
 
+  /* ── FOOTER ── */
   footer {
-    padding: 70px 0 40px;
-    border-top: 1px solid var(--line);
+    padding: 80px 0 44px;
+    background: var(--charcoal);
   }
 
-  .footer-grid {
+  .footer-top {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 40px;
-    margin-bottom: 60px;
+    grid-template-columns: 2.2fr 1fr 1fr 1fr;
+    gap: 48px;
+    padding-bottom: 60px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 36px;
   }
 
-  .footer-grid h4 {
-    font-size: 14px;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--charcoal);
+  .footer-brand .logo {
+    display: inline-block;
     margin-bottom: 18px;
+    color: var(--white);
+  }
+
+  .footer-brand .logo em { color: var(--sage); }
+
+  .footer-brand p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.8;
+    max-width: 280px;
+  }
+
+  .footer-col h4 {
     font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 20px;
     font-weight: 500;
   }
 
-  .footer-grid p {
+  .footer-col ul { list-style: none; }
+
+  .footer-col li { margin-bottom: 13px; }
+
+  .footer-col a {
     font-size: 14px;
-    color: var(--ink-soft);
-    line-height: 1.8;
-    max-width: 320px;
-  }
-
-  .footer-grid ul {
-    list-style: none;
-  }
-
-  .footer-grid li {
-    margin-bottom: 12px;
-  }
-
-  .footer-grid a {
-    font-size: 14px;
-    color: var(--ink-soft);
+    color: rgba(255,255,255,0.6);
     transition: color 0.2s ease;
   }
 
-  .footer-grid a:hover {
-    color: var(--sage-deep);
-  }
+  .footer-col a:hover { color: var(--blush-mid); }
 
   .footer-bottom {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 30px;
-    border-top: 1px solid var(--line);
     flex-wrap: wrap;
     gap: 16px;
   }
 
   .footer-bottom p {
     font-size: 13px;
-    color: var(--ink-soft);
+    color: rgba(255,255,255,0.3);
   }
 
-  .social-links {
-    display: flex;
-    gap: 18px;
-  }
+  .social-links { display: flex; gap: 12px; }
 
   .social-links a {
-    width: 38px;
-    height: 38px;
-    border: 1px solid var(--line);
+    width: 38px; height: 38px;
+    border: 1px solid rgba(255,255,255,0.15);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 13px;
-    color: var(--ink-soft);
-    transition: all 0.2s ease;
+    color: rgba(255,255,255,0.5);
+    transition: all 0.25s ease;
+    font-weight: 500;
   }
 
   .social-links a:hover {
-    background-color: var(--charcoal);
-    color: var(--cream);
-    border-color: var(--charcoal);
+    border-color: var(--blush-mid);
+    color: var(--blush-mid);
   }
 
-  @media (max-width: 900px) {
-    nav { display: none; }
-    .hero h1 { font-size: 38px; }
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1020px) {
+    .intro-band { grid-template-columns: 1fr; gap: 50px; }
+    .intro-img { max-width: 500px; }
     .categories-grid { grid-template-columns: repeat(2, 1fr); }
-    .articles-grid { grid-template-columns: 1fr; }
-    .footer-grid { grid-template-columns: 1fr 1fr; }
-    .stats-inner { gap: 36px; }
-    .philosophy blockquote { font-size: 24px; }
+    .articles-grid { grid-template-columns: repeat(2, 1fr); }
+    .mood-grid { grid-template-columns: 1fr; height: auto; }
+    .mood-item { height: 300px; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .stats-inner { grid-template-columns: repeat(2, 1fr); }
+    .stat-item:nth-child(2) { border-right: none; }
   }
 
-  @media (max-width: 560px) {
+  @media (max-width: 680px) {
+    nav { display: none; }
+    .hero h1 { font-size: 34px; }
+    .hero-actions { flex-direction: column; }
     .categories-grid { grid-template-columns: 1fr; }
-    .footer-grid { grid-template-columns: 1fr; }
-    .hero { padding: 60px 0 70px; }
-    .section { padding: 70px 0; }
-    .hero-actions { flex-direction: column; align-items: center; }
-    .newsletter-form { flex-direction: column; }
+    .articles-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; }
+    .feature-strip { height: 380px; }
+    .intro-img { max-width: 100%; }
   }
 </style>
 </head>
 <body>
 
-<header>
+<header id="site-header">
   <div class="wrap header-inner">
     <a href="index.html" class="logo">Room<em>Reset</em></a>
     <nav>
@@ -534,91 +988,130 @@
   </div>
 </header>
 
+<!-- HERO — replace .hero-bg background-color with background-image: url('images/hero-bg.jpg') -->
 <section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
   <div class="wrap">
-    <span class="hero-eyebrow">A space to slow down and start over</span>
-    <h1>Aesthetic home decor that feels like <em>you</em>, even on a small budget</h1>
-    <p>RoomReset is a guide for anyone who wants their home to feel calmer, prettier, and more intentional without spending a fortune to get there. Every room transformation, organization idea, and decor pick here has been chosen with one goal in mind, helping your space look expensive while your wallet stays exactly where it should be.</p>
-    <div class="hero-actions">
-      <a href="#categories" class="btn btn-primary">Start Exploring</a>
-      <a href="about-us/index.html" class="btn btn-outline">Who Writes This</a>
+    <div class="hero-content">
+      <span class="hero-eyebrow">A space to slow down and start over</span>
+      <h1>Aesthetic home decor<br>that feels like <em>you</em>,<br>even on a small budget</h1>
+      <p class="hero-desc">RoomReset is a guide for anyone who wants their home to feel calmer, prettier, and more intentional without spending a fortune to get there. Every room transformation, organization idea, and decor pick here has been chosen with one goal in mind, helping your space look expensive while your wallet stays exactly where it should be.</p>
+      <div class="hero-actions">
+        <a href="#categories" class="btn btn-light">Start Exploring</a>
+        <a href="about-us/index.html" class="btn btn-ghost">Who Writes This</a>
+      </div>
     </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
   </div>
 </section>
 
+<!-- STATS STRIP -->
 <div class="stats">
-  <div class="wrap stats-inner">
-    <div>
-      <div class="stat-num">6</div>
-      <div class="stat-label">Room Categories</div>
-    </div>
-    <div>
-      <div class="stat-num">100%</div>
-      <div class="stat-label">Budget Friendly Picks</div>
-    </div>
-    <div>
-      <div class="stat-num">Soft</div>
-      <div class="stat-label">Calming Aesthetic</div>
-    </div>
-    <div>
-      <div class="stat-num">2026</div>
-      <div class="stat-label">Reset Since</div>
+  <div class="wrap">
+    <div class="stats-inner">
+      <div class="stat-item">
+        <span class="stat-num">6</span>
+        <span class="stat-label">Room Categories</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">100%</span>
+        <span class="stat-label">Budget Friendly Picks</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">Soft</span>
+        <span class="stat-label">Calming Aesthetic</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">2026</span>
+        <span class="stat-label">Reset Since</span>
+      </div>
     </div>
   </div>
 </div>
 
-<section class="section" id="categories">
+<!-- INTRO BAND — replace .intro-img background-color with background-image: url('images/intro-room.jpg') -->
+<div class="wrap">
+  <div class="intro-band">
+    <div class="intro-img reveal">
+      <div class="intro-badge">
+        <span>100%</span>
+        <span>Real Rooms</span>
+      </div>
+    </div>
+    <div class="intro-text reveal reveal-delay-1">
+      <span class="eyebrow">Why RoomReset</span>
+      <h2>Beautiful spaces don't require a <em>big budget</em></h2>
+      <p>Most home decor content online is aimed at people with unlimited budgets, or it is so generic it could apply to any room in any country. RoomReset was built to be something more honest than that.</p>
+      <p>Every article starts from the reality most people are living in: a modest amount of money, a small or imperfect space, and a genuine desire to make it feel better without turning it into a renovation project.</p>
+      <a href="about-us/index.html" class="btn btn-primary">Our Story</a>
+    </div>
+  </div>
+</div>
+
+<!-- CATEGORIES — replace .cat-img background-color values with background-image in each card -->
+<section class="categories-section" id="categories">
   <div class="wrap">
-    <div class="section-head">
+    <div class="section-head reveal">
       <span class="section-eyebrow">Explore by category</span>
       <h2>Find the reset your space needs</h2>
       <p>Whether you are working with an entire room or a single corner, these categories will guide you toward the ideas that genuinely fit your space, your style, and your budget right now.</p>
     </div>
 
     <div class="categories-grid">
-      <a href="bedroom-ideas/index.html" class="category-card cat-bedroom">
-        <div class="category-overlay"></div>
-        <div class="category-content">
+      <a href="bedroom-ideas/index.html" class="category-card cat-bedroom reveal">
+        <div class="cat-img"></div>
+        <div class="cat-overlay"></div>
+        <div class="cat-arrow">↗</div>
+        <div class="cat-content">
           <h3>Room Ideas</h3>
           <p>Bedroom, living room, and kitchen inspiration for full transformations</p>
         </div>
       </a>
-
-      <a href="organization/index.html" class="category-card cat-organization">
-        <div class="category-overlay"></div>
-        <div class="category-content">
+      <a href="organization/index.html" class="category-card cat-organization reveal reveal-delay-1">
+        <div class="cat-img"></div>
+        <div class="cat-overlay"></div>
+        <div class="cat-arrow">↗</div>
+        <div class="cat-content">
           <h3>Organization</h3>
           <p>Fridge, closet, and laundry systems that actually stay tidy</p>
         </div>
       </a>
-
-      <a href="budget-decor/index.html" class="category-card cat-budget">
-        <div class="category-overlay"></div>
-        <div class="category-content">
+      <a href="budget-decor/index.html" class="category-card cat-budget reveal reveal-delay-2">
+        <div class="cat-img"></div>
+        <div class="cat-overlay"></div>
+        <div class="cat-arrow">↗</div>
+        <div class="cat-content">
           <h3>Budget Decor</h3>
           <p>Decor roundups sorted by price so you always know what fits</p>
         </div>
       </a>
-
-      <a href="by-style/index.html" class="category-card cat-style">
-        <div class="category-overlay"></div>
-        <div class="category-content">
+      <a href="by-style/index.html" class="category-card cat-style reveal">
+        <div class="cat-img"></div>
+        <div class="cat-overlay"></div>
+        <div class="cat-arrow">↗</div>
+        <div class="cat-content">
           <h3>By Style</h3>
           <p>Cottagecore, moody, and minimalist guides for every aesthetic</p>
         </div>
       </a>
-
-      <a href="small-spaces/index.html" class="category-card cat-small">
-        <div class="category-overlay"></div>
-        <div class="category-content">
+      <a href="small-spaces/index.html" class="category-card cat-small reveal reveal-delay-1">
+        <div class="cat-img"></div>
+        <div class="cat-overlay"></div>
+        <div class="cat-arrow">↗</div>
+        <div class="cat-content">
           <h3>Small Spaces</h3>
           <p>Apartment friendly ideas for reading nooks, balconies, and more</p>
         </div>
       </a>
-
-      <a href="shop-picks/index.html" class="category-card cat-shop">
-        <div class="category-overlay"></div>
-        <div class="category-content">
+      <a href="shop-picks/index.html" class="category-card cat-shop reveal reveal-delay-2">
+        <div class="cat-img"></div>
+        <div class="cat-overlay"></div>
+        <div class="cat-arrow">↗</div>
+        <div class="cat-content">
           <h3>Shop Picks</h3>
           <p>Curated product lists chosen for both quality and price</p>
         </div>
@@ -627,17 +1120,34 @@
   </div>
 </section>
 
-<section class="section articles-bg" id="articles">
+<!-- FEATURE STRIP — replace .feature-strip-img background-color with background-image: url('images/feature-strip.jpg') -->
+<section class="feature-strip">
+  <div class="feature-strip-img"></div>
+  <div class="feature-strip-overlay"></div>
+  <div class="feature-strip-content">
+    <div class="wrap">
+      <div class="feature-strip-text reveal">
+        <span class="eyebrow">Trending right now</span>
+        <h2>The Sunday reset <em>ritual</em></h2>
+        <p>A weekly reset routine is the single habit that keeps an organized, beautiful home feeling that way all week long, without spending hours or money to maintain it.</p>
+        <a href="sunday-reset-routine/index.html" class="btn btn-light">Read the Guide</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ARTICLES — replace article-thumb-img background-color values with background-image -->
+<section class="articles-section" id="articles">
   <div class="wrap">
-    <div class="section-head">
+    <div class="section-head reveal">
       <span class="section-eyebrow">Fresh from the blog</span>
       <h2>Latest room resets</h2>
       <p>Real ideas, honest budgets, and the small details that make a space feel finished instead of half decorated.</p>
     </div>
 
     <div class="articles-grid">
-      <a href="small-bedroom-ideas/index.html" class="article-card">
-        <div class="article-thumb thumb-1"></div>
+      <a href="small-bedroom-ideas/index.html" class="article-card reveal">
+        <div class="article-thumb"><div class="article-thumb-img"></div></div>
         <div class="article-body">
           <span class="article-tag">Room Ideas</span>
           <h3>Small Bedroom Ideas Under 3000 Rupees</h3>
@@ -645,9 +1155,8 @@
           <span class="article-link">Read the Guide</span>
         </div>
       </a>
-
-      <a href="fridge-organization/index.html" class="article-card">
-        <div class="article-thumb thumb-2"></div>
+      <a href="fridge-organization/index.html" class="article-card reveal reveal-delay-1">
+        <div class="article-thumb"><div class="article-thumb-img"></div></div>
         <div class="article-body">
           <span class="article-tag">Organization</span>
           <h3>Fridge Organization That Actually Looks Good</h3>
@@ -655,9 +1164,8 @@
           <span class="article-link">Read the Guide</span>
         </div>
       </a>
-
-      <a href="cottagecore-bedroom/index.html" class="article-card">
-        <div class="article-thumb thumb-3"></div>
+      <a href="cottagecore-bedroom/index.html" class="article-card reveal reveal-delay-2">
+        <div class="article-thumb"><div class="article-thumb-img"></div></div>
         <div class="article-body">
           <span class="article-tag">By Style</span>
           <h3>Cottagecore Bedroom on a Budget</h3>
@@ -665,9 +1173,8 @@
           <span class="article-link">Read the Guide</span>
         </div>
       </a>
-
-      <a href="living-room-glow-up/index.html" class="article-card">
-        <div class="article-thumb thumb-4"></div>
+      <a href="living-room-glow-up/index.html" class="article-card reveal">
+        <div class="article-thumb"><div class="article-thumb-img"></div></div>
         <div class="article-body">
           <span class="article-tag">Budget Decor</span>
           <h3>Living Room Glow Up Under 5000 Rupees</h3>
@@ -675,9 +1182,8 @@
           <span class="article-link">Read the Guide</span>
         </div>
       </a>
-
-      <a href="reading-nook-ideas/index.html" class="article-card">
-        <div class="article-thumb thumb-5"></div>
+      <a href="reading-nook-ideas/index.html" class="article-card reveal reveal-delay-1">
+        <div class="article-thumb"><div class="article-thumb-img"></div></div>
         <div class="article-body">
           <span class="article-tag">Small Spaces</span>
           <h3>Cozy Reading Nook Ideas for Small Apartments</h3>
@@ -685,9 +1191,8 @@
           <span class="article-link">Read the Guide</span>
         </div>
       </a>
-
-      <a href="moody-bedroom-makeover/index.html" class="article-card">
-        <div class="article-thumb thumb-6"></div>
+      <a href="moody-bedroom-makeover/index.html" class="article-card reveal reveal-delay-2">
+        <div class="article-thumb"><div class="article-thumb-img"></div></div>
         <div class="article-body">
           <span class="article-tag">By Style</span>
           <h3>Moody Bedroom Makeover Guide</h3>
@@ -699,17 +1204,47 @@
   </div>
 </section>
 
+<!-- PHILOSOPHY -->
 <section class="philosophy">
   <div class="wrap">
-    <blockquote>"A beautiful home isn't about how much you spend. It's about how intentionally you choose."</blockquote>
+    <blockquote>"A beautiful home is not about how much you spend. It is about how intentionally you choose."</blockquote>
     <cite>The RoomReset Philosophy</cite>
   </div>
 </section>
 
+<!-- MOOD GRID — replace .mood-item nth-child background-color values with background-image -->
+<div class="mood-grid">
+  <div class="mood-item">
+    <div class="mood-item-bg"></div>
+    <div class="mood-item-overlay"></div>
+    <div class="mood-item-label">
+      <span>Aesthetic</span>
+      <h3>Soft and Organic</h3>
+    </div>
+  </div>
+  <div class="mood-item">
+    <div class="mood-item-bg"></div>
+    <div class="mood-item-overlay"></div>
+    <div class="mood-item-label">
+      <span>Style</span>
+      <h3>Moody and Layered</h3>
+    </div>
+  </div>
+  <div class="mood-item">
+    <div class="mood-item-bg"></div>
+    <div class="mood-item-overlay"></div>
+    <div class="mood-item-label">
+      <span>Vibe</span>
+      <h3>Clean and Minimal</h3>
+    </div>
+  </div>
+</div>
+
+<!-- NEWSLETTER -->
 <section class="newsletter">
   <div class="wrap">
     <h2>Get new room ideas in your inbox</h2>
-    <p>A short, honest roundup of the newest guides, budget finds, and seasonal decor ideas, sent only when there is something worth sharing.</p>
+    <p>A short, honest roundup of the newest guides, budget finds, and seasonal decor ideas, sent only when there is something genuinely worth sharing.</p>
     <form class="newsletter-form">
       <input type="email" placeholder="Your email address" required>
       <button type="submit">Subscribe</button>
@@ -717,30 +1252,32 @@
   </div>
 </section>
 
+<!-- FOOTER -->
 <footer>
   <div class="wrap">
-    <div class="footer-grid">
-      <div>
+    <div class="footer-top">
+      <div class="footer-brand">
         <a href="index.html" class="logo">Room<em>Reset</em></a>
-        <p style="margin-top: 18px;">Practical, beautiful ideas for creating a home that feels expensive, intentional, and entirely your own, all without stretching your budget further than it needs to go.</p>
+        <p>Practical, beautiful ideas for creating a home that feels expensive, intentional, and entirely your own, all without stretching your budget further than it needs to go.</p>
       </div>
-      <div>
+      <div class="footer-col">
         <h4>Explore</h4>
         <ul>
           <li><a href="bedroom-ideas/index.html">Room Ideas</a></li>
           <li><a href="organization/index.html">Organization</a></li>
           <li><a href="budget-decor/index.html">Budget Decor</a></li>
           <li><a href="by-style/index.html">By Style</a></li>
+          <li><a href="small-spaces/index.html">Small Spaces</a></li>
         </ul>
       </div>
-      <div>
+      <div class="footer-col">
         <h4>Site</h4>
         <ul>
           <li><a href="about-us/index.html">About Us</a></li>
           <li><a href="mailto:roomreset6@gmail.com">Contact</a></li>
         </ul>
       </div>
-      <div>
+      <div class="footer-col">
         <h4>Legal</h4>
         <ul>
           <li><a href="privacy-policy/index.html">Privacy Policy</a></li>
@@ -749,7 +1286,6 @@
         </ul>
       </div>
     </div>
-
     <div class="footer-bottom">
       <p>© 2026 RoomReset. All rights reserved.</p>
       <div class="social-links">
@@ -759,6 +1295,27 @@
     </div>
   </div>
 </footer>
+
+<script>
+  // Header scroll behaviour
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  revealEls.forEach(el => observer.observe(el));
+</script>
 
 </body>
 </html>
