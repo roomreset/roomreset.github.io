@@ -11,16 +11,18 @@
 <style>
   :root {
     --blush: #f3e6e2;
-    --blush-deep: #e3c2ba;
+    --blush-mid: #eacfc8;
     --sage: #a9b29a;
     --sage-deep: #7c8a6c;
     --cream: #faf6f1;
     --charcoal: #3a3530;
     --ink-soft: #6b6258;
     --line: #e8ddd4;
+    --white: #ffffff;
   }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
 
   body {
     font-family: 'Jost', sans-serif;
@@ -28,294 +30,584 @@
     color: var(--charcoal);
     line-height: 1.7;
     font-weight: 300;
+    overflow-x: hidden;
   }
 
-  h1, h2, h3 {
+  h1, h2, h3, h4 {
     font-family: 'Playfair Display', serif;
     font-weight: 500;
     color: var(--charcoal);
-    line-height: 1.3;
+    line-height: 1.25;
   }
 
   a { text-decoration: none; color: inherit; }
+  img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
-  .wrap {
-    max-width: 1140px;
-    margin: 0 auto;
-    padding: 0 32px;
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 40px; }
+  .page-wrap { max-width: 780px; margin: 0 auto; padding: 0 40px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
   }
 
-  .page-wrap {
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 0 32px;
-  }
-
+  /* ── HEADER ── */
   header {
-    padding: 28px 0;
-    border-bottom: 1px solid var(--line);
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    transition: background 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  header.scrolled {
+    background: rgba(250, 246, 241, 0.96);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 1px 0 var(--line);
   }
 
   .header-inner {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 72px;
   }
 
   .logo {
     font-family: 'Playfair Display', serif;
-    font-size: 26px;
+    font-size: 24px;
     font-weight: 600;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.3px;
+    color: var(--white);
+    transition: color 0.4s ease;
   }
 
-  .logo em {
-    font-style: italic;
-    color: var(--sage-deep);
-  }
+  header.scrolled .logo { color: var(--charcoal); }
+  .logo em { font-style: italic; color: var(--blush-mid); transition: color 0.4s ease; }
+  header.scrolled .logo em { color: var(--sage-deep); }
 
-  nav ul {
-    list-style: none;
-    display: flex;
-    gap: 36px;
-  }
+  nav ul { list-style: none; display: flex; gap: 38px; }
 
   nav a {
-    font-size: 14px;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-    transition: color 0.2s ease;
-  }
-
-  nav a:hover { color: var(--sage-deep); }
-
-  /* Page hero */
-  .page-hero {
-    background: linear-gradient(180deg, var(--blush) 0%, var(--cream) 100%);
-    padding: 80px 0 70px;
-    text-align: center;
-  }
-
-  .page-eyebrow {
     font-size: 13px;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.85);
+    transition: color 0.3s ease;
+    font-weight: 400;
+  }
+
+  header.scrolled nav a { color: var(--ink-soft); }
+  nav a:hover, header.scrolled nav a:hover { color: var(--sage-deep) !important; }
+
+  /* ── HERO ── */
+  .page-hero {
+    position: relative;
+    height: 82vh;
+    min-height: 560px;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 80px;
+    overflow: hidden;
+  }
+
+  /* Hero banner image slot — replace background-color with background-image: url('../images/about-hero.jpg') */
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-color: #b8a898;
+    background-size: cover;
+    background-position: center 30%;
+    transform: scale(1.05);
+    animation: heroZoom 14s ease-out forwards;
+  }
+
+  @keyframes heroZoom {
+    from { transform: scale(1.05); }
+    to   { transform: scale(1.00); }
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(58,53,48,0.18) 0%,
+      rgba(58,53,48,0.25) 40%,
+      rgba(58,53,48,0.72) 100%
+    );
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    opacity: 0;
+    transform: translateY(24px);
+    animation: fadeUp 1s ease 0.4s forwards;
+  }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--blush-mid);
+    margin-bottom: 22px;
+    font-weight: 400;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 32px; height: 1px;
+    background: var(--blush-mid);
+  }
+
+  .page-hero h1 {
+    font-size: clamp(38px, 5vw, 68px);
+    color: var(--white);
+    font-weight: 500;
+    line-height: 1.12;
+    margin-bottom: 22px;
+  }
+
+  .page-hero h1 em { font-style: italic; color: var(--blush-mid); }
+
+  .page-hero .hero-sub {
+    font-size: 17px;
+    color: rgba(255,255,255,0.8);
+    max-width: 520px;
+    line-height: 1.8;
+  }
+
+  /* ── BODY SECTIONS ── */
+  .page-body {
+    padding: 100px 0;
+  }
+
+  .page-body p {
+    font-size: 17px;
+    color: var(--charcoal);
+    margin-bottom: 26px;
+    line-height: 1.88;
+  }
+
+  .page-body h2 {
+    font-size: clamp(26px, 2.5vw, 34px);
+    margin: 60px 0 20px;
+  }
+
+  /* ── SPLIT SECTION: image + text ── */
+  .split-section {
+    padding: 100px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .split-section.reverse { direction: rtl; }
+  .split-section.reverse > * { direction: ltr; }
+
+  /* Image slots inside split sections */
+  .split-img {
+    aspect-ratio: 4 / 5;
+    border-radius: 3px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Split image 1 — replace with background-image: url('../images/about-story.jpg') */
+  .split-img-1 {
+    background-color: #c9b0a4;
+    background-size: cover;
+    background-position: center;
+  }
+
+  /* Split image 2 — replace with background-image: url('../images/about-process.jpg') */
+  .split-img-2 {
+    background-color: #adb89a;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .split-img::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 3px;
+    pointer-events: none;
+  }
+
+  .split-text .eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--sage-deep);
     margin-bottom: 18px;
     display: block;
   }
 
-  .page-hero h1 {
-    font-size: 44px;
-    margin-bottom: 20px;
+  .split-text h2 {
+    font-size: clamp(26px, 2.5vw, 36px);
+    margin-bottom: 22px;
+    line-height: 1.2;
   }
 
-  .page-hero p {
-    font-size: 17px;
+  .split-text h2 em { font-style: italic; color: var(--sage-deep); }
+
+  .split-text p {
+    font-size: 16.5px;
     color: var(--ink-soft);
-    max-width: 580px;
-    margin: 0 auto;
-    line-height: 1.8;
+    margin-bottom: 20px;
+    line-height: 1.88;
   }
 
-  /* Body content */
-  .page-body {
-    padding: 70px 0 100px;
+  /* ── VALUES GRID ── */
+  .values-section {
+    padding: 100px 0;
+    background: var(--charcoal);
   }
 
-  .page-body p {
-    font-size: 17px;
-    color: var(--charcoal);
-    margin-bottom: 28px;
-    line-height: 1.85;
+  .values-section .section-eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 16px;
+    display: block;
+    text-align: center;
   }
 
-  .page-body h2 {
-    font-size: 28px;
-    margin: 52px 0 18px;
+  .values-section h2 {
+    font-size: clamp(28px, 3vw, 40px);
+    color: var(--white);
+    text-align: center;
+    margin-bottom: 60px;
   }
 
-  .page-body h3 {
-    font-size: 20px;
-    color: var(--sage-deep);
-    margin: 36px 0 14px;
-  }
-
-  /* Values grid */
   .values-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
-    margin: 36px 0 52px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    background: rgba(255,255,255,0.06);
   }
 
   .value-card {
-    background-color: var(--blush);
-    border-radius: 6px;
-    padding: 28px;
+    background: var(--charcoal);
+    padding: 40px 34px;
+    transition: background 0.3s ease;
+  }
+
+  .value-card:hover { background: rgba(255,255,255,0.04); }
+
+  .value-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    color: rgba(255,255,255,0.1);
+    line-height: 1;
+    margin-bottom: 18px;
   }
 
   .value-card h3 {
     font-size: 18px;
-    margin: 0 0 10px;
-    color: var(--charcoal);
+    color: var(--blush-mid);
+    margin-bottom: 12px;
+    font-family: 'Playfair Display', serif;
   }
 
   .value-card p {
-    font-size: 15px;
+    font-size: 14.5px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.8;
+  }
+
+  /* ── QUOTE BAND ── */
+  .quote-band {
+    padding: 120px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    background: var(--blush);
+  }
+
+  .quote-band::before {
+    content: '"';
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Playfair Display', serif;
+    font-size: 260px;
+    color: var(--blush-mid);
+    opacity: 0.4;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .quote-band blockquote {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(22px, 3vw, 34px);
+    max-width: 780px;
+    margin: 0 auto 24px;
+    line-height: 1.5;
+    position: relative;
+  }
+
+  .quote-band cite {
+    font-style: normal;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sage-deep);
+  }
+
+  /* ── PROCESS STRIP ── */
+  .process-strip {
+    padding: 100px 0;
+  }
+
+  .process-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 56px;
+  }
+
+  .process-step {
+    padding: 0 32px 0 0;
+    border-right: 1px solid var(--line);
+    padding-right: 32px;
+    margin-right: 32px;
+  }
+
+  .process-step:last-child {
+    border-right: none;
+    padding-right: 0;
+    margin-right: 0;
+  }
+
+  .process-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    color: var(--blush-mid);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .process-step h3 {
+    font-size: 17px;
+    margin-bottom: 10px;
+  }
+
+  .process-step p {
+    font-size: 14.5px;
     color: var(--ink-soft);
-    margin: 0;
     line-height: 1.75;
   }
 
-  /* Quote band */
-  .about-quote {
-    background-color: var(--sage);
-    padding: 60px 32px;
-    text-align: center;
-    margin: 60px 0;
-    border-radius: 6px;
+  /* ── FULL-WIDTH IMAGE BAND ── */
+  .full-img-band {
+    position: relative;
+    height: 420px;
+    overflow: hidden;
   }
 
-  .about-quote blockquote {
-    font-family: 'Playfair Display', serif;
+  /* Full-width about image slot — replace with background-image: url('../images/about-full.jpg') */
+  .full-img-band-bg {
+    position: absolute;
+    inset: 0;
+    background-color: #bfad9e;
+    background-size: cover;
+    background-position: center 35%;
+  }
+
+  .full-img-band-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(58,53,48,0.35);
+  }
+
+  .full-img-band-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .full-img-band-content h2 {
+    font-size: clamp(28px, 4vw, 52px);
+    color: var(--white);
     font-style: italic;
-    font-size: 26px;
-    color: var(--cream);
-    max-width: 620px;
-    margin: 0 auto;
-    line-height: 1.55;
+    max-width: 700px;
+    line-height: 1.3;
   }
 
-  /* Contact strip */
+  /* ── CONTACT STRIP ── */
   .contact-strip {
-    background-color: var(--blush);
-    border-radius: 6px;
-    padding: 36px;
+    padding: 100px 0;
     text-align: center;
-    margin-top: 60px;
+  }
+
+  .contact-strip .eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--sage-deep);
+    margin-bottom: 16px;
+    display: block;
   }
 
   .contact-strip h2 {
-    font-size: 24px;
-    margin-bottom: 14px;
+    font-size: clamp(26px, 3vw, 40px);
+    margin-bottom: 18px;
   }
 
   .contact-strip p {
-    font-size: 15px;
+    font-size: 16.5px;
     color: var(--ink-soft);
-    margin-bottom: 22px;
-    line-height: 1.75;
+    max-width: 520px;
+    margin: 0 auto 36px;
+    line-height: 1.85;
   }
 
-  .contact-strip a.btn {
+  .btn-dark {
     display: inline-block;
-    padding: 13px 30px;
-    background-color: var(--charcoal);
-    color: var(--cream);
+    padding: 16px 38px;
+    background: var(--charcoal);
+    color: var(--white);
     font-size: 13px;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     border-radius: 2px;
-    transition: background-color 0.2s ease;
+    transition: background 0.25s ease;
   }
 
-  .contact-strip a.btn:hover {
-    background-color: var(--sage-deep);
-  }
+  .btn-dark:hover { background: var(--sage-deep); }
 
+  /* ── FOOTER ── */
   footer {
-    padding: 70px 0 40px;
-    border-top: 1px solid var(--line);
+    padding: 80px 0 44px;
+    background: var(--charcoal);
   }
 
-  .footer-grid {
+  .footer-top {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 40px;
-    margin-bottom: 60px;
+    grid-template-columns: 2.2fr 1fr 1fr 1fr;
+    gap: 48px;
+    padding-bottom: 60px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 36px;
   }
 
-  .footer-grid h4 {
-    font-size: 14px;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--charcoal);
+  .footer-brand .logo {
+    display: inline-block;
     margin-bottom: 18px;
+    color: var(--white);
+  }
+
+  .footer-brand .logo em { color: var(--sage); }
+
+  .footer-brand p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.8;
+    max-width: 280px;
+  }
+
+  .footer-col h4 {
     font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 20px;
     font-weight: 500;
   }
 
-  .footer-grid p {
-    font-size: 14px;
-    color: var(--ink-soft);
-    line-height: 1.8;
-    max-width: 320px;
-  }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 13px; }
 
-  .footer-grid ul { list-style: none; }
-  .footer-grid li { margin-bottom: 12px; }
-
-  .footer-grid a {
+  .footer-col a {
     font-size: 14px;
-    color: var(--ink-soft);
+    color: rgba(255,255,255,0.6);
     transition: color 0.2s ease;
   }
 
-  .footer-grid a:hover { color: var(--sage-deep); }
+  .footer-col a:hover { color: var(--blush-mid); }
 
   .footer-bottom {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 30px;
-    border-top: 1px solid var(--line);
     flex-wrap: wrap;
     gap: 16px;
   }
 
   .footer-bottom p {
     font-size: 13px;
-    color: var(--ink-soft);
+    color: rgba(255,255,255,0.3);
   }
 
-  .social-links { display: flex; gap: 18px; }
+  .social-links { display: flex; gap: 12px; }
 
   .social-links a {
-    width: 38px;
-    height: 38px;
-    border: 1px solid var(--line);
+    width: 38px; height: 38px;
+    border: 1px solid rgba(255,255,255,0.15);
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
     font-size: 13px;
-    color: var(--ink-soft);
-    transition: all 0.2s ease;
+    color: rgba(255,255,255,0.5);
+    transition: all 0.25s ease;
+    font-weight: 500;
   }
 
   .social-links a:hover {
-    background-color: var(--charcoal);
-    color: var(--cream);
-    border-color: var(--charcoal);
+    border-color: var(--blush-mid);
+    color: var(--blush-mid);
   }
 
-  @media (max-width: 900px) {
+  /* ── REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.12s; }
+  .reveal-delay-2 { transition-delay: 0.24s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 960px) {
     nav { display: none; }
-    .page-hero h1 { font-size: 34px; }
-    .values-grid { grid-template-columns: 1fr; }
-    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .split-section { grid-template-columns: 1fr; gap: 48px; }
+    .split-section.reverse { direction: ltr; }
+    .values-grid { grid-template-columns: 1fr 1fr; }
+    .process-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+    .process-step { border-right: none; padding-right: 0; margin-right: 0; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .page-hero h1 { font-size: 36px; }
   }
 
-  @media (max-width: 560px) {
-    .footer-grid { grid-template-columns: 1fr; }
+  @media (max-width: 600px) {
+    .values-grid { grid-template-columns: 1fr; }
+    .process-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
 
-<header>
+<header id="site-header">
   <div class="wrap header-inner">
     <a href="../index.html" class="logo">Room<em>Reset</em></a>
     <nav>
@@ -329,99 +621,180 @@
   </div>
 </header>
 
+<!-- HERO — replace .hero-bg background-color with background-image: url('../images/about-hero.jpg') -->
 <section class="page-hero">
-  <div class="page-wrap">
-    <span class="page-eyebrow">Who we are</span>
-    <h1>About RoomReset</h1>
-    <p>A home decor and organization guide built for people who want their space to feel calm, beautiful, and completely their own, without needing a large budget or a designer to get there.</p>
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="wrap">
+    <div class="hero-content">
+      <span class="hero-eyebrow">Who we are</span>
+      <h1>The story behind<br><em>RoomReset</em></h1>
+      <p class="hero-sub">A home decor guide built for people who want their space to feel calm, beautiful, and completely their own, without needing a large budget or a designer to get there.</p>
+    </div>
   </div>
 </section>
 
+<!-- INTRO TEXT -->
 <section class="page-body">
   <div class="page-wrap">
+    <p class="reveal" style="font-size: 19px; font-weight: 400; color: var(--ink-soft); margin-bottom: 32px;">RoomReset was created out of a simple frustration: most home decor content online is either aimed at people with unlimited budgets, or it is so generic it could apply to any room in any country and ends up being useful to nobody in particular.</p>
+    <p class="reveal">We wanted something more honest than that. A guide that starts from the reality most people are actually living in, a modest amount of money, a small or imperfect space, and a genuine desire to make it feel better without turning it into a renovation project.</p>
+    <p class="reveal">Every article on this site is written with one question in mind: what is the single most effective thing someone can do to improve this room today, with what they can reasonably afford? That question shapes everything from the products we recommend to the way we explain each idea. We never recommend something because it looks good in a photoshoot. We recommend it because it genuinely earns its place in a real room.</p>
+  </div>
+</section>
 
-    <p>RoomReset was created out of a simple frustration: most home decor content online is either aimed at people with unlimited budgets, or it is so generic that it could apply to any room in any country and ends up being useful to nobody in particular. We wanted something more honest than that. A guide that starts from the reality most people are actually living in, a modest amount of money, a small or imperfect space, and a genuine desire to make it feel better without turning it into a renovation project.</p>
-
-    <p>Every article on this site is written with one question in mind: what is the single most effective thing someone can do to improve this room today, with what they can reasonably afford? That question shapes everything from the products we recommend to the way we explain each idea. We never recommend something because it looks good in a photoshoot. We recommend it because it genuinely earns its place in a real room.</p>
-
-    <div class="about-quote">
-      <blockquote>"A beautiful home is not about how much you spend. It is about how intentionally you choose."</blockquote>
+<!-- SPLIT: image left, text right — replace .split-img-1 background-color -->
+<div class="wrap">
+  <div class="split-section">
+    <div class="split-img split-img-1 reveal"></div>
+    <div class="split-text reveal reveal-delay-1">
+      <span class="eyebrow">Our approach</span>
+      <h2>Every recommendation earns its <em>place</em></h2>
+      <p>Every product recommendation on RoomReset goes through the same basic test before it makes it onto the site. Does it do what it claims to do? Does it look good in a real home setting rather than just a staged photo? Is the price genuinely reasonable for what you are getting? Does it have enough reviews from real buyers to give us confidence it holds up over time?</p>
+      <p>Products that pass all four questions make the cut. Products that fail any one of them do not appear here, regardless of commission rates or brand partnerships.</p>
     </div>
+  </div>
+</div>
 
-    <h2>What We Cover</h2>
-
-    <p>RoomReset covers the full range of home improvement that does not require a contractor or a credit card limit you would rather not think about. Our content falls into six main areas, each chosen because it represents a part of the home where a small investment of time and money tends to produce a disproportionately large improvement in how the space looks and feels.</p>
-
+<!-- VALUES GRID -->
+<section class="values-section">
+  <div class="wrap">
+    <span class="section-eyebrow">What we cover</span>
+    <h2>Six ways to reset your space</h2>
     <div class="values-grid">
-      <div class="value-card">
+      <div class="value-card reveal">
+        <div class="value-num">01</div>
         <h3>Room Ideas</h3>
         <p>Full bedroom, living room, and kitchen guides that walk through the most impactful changes you can make to each space, from lighting to textiles to furniture arrangement.</p>
       </div>
-      <div class="value-card">
+      <div class="value-card reveal reveal-delay-1">
+        <div class="value-num">02</div>
         <h3>Organization</h3>
         <p>Practical systems for fridges, closets, laundry rooms, and desks that look good and stay that way, because an organized space is only useful if you can actually maintain it.</p>
       </div>
-      <div class="value-card">
+      <div class="value-card reveal reveal-delay-2">
+        <div class="value-num">03</div>
         <h3>Budget Decor</h3>
         <p>Curated product roundups sorted by price point so you always know exactly what fits your budget before you start reading, with honest notes on what is worth it and what is not.</p>
       </div>
-      <div class="value-card">
+      <div class="value-card reveal">
+        <div class="value-num">04</div>
         <h3>By Style</h3>
         <p>Aesthetic specific guides for cottagecore, moody, minimalist, Art Deco, and more, so you can build toward a look that feels consistent rather than randomly assembled.</p>
       </div>
-      <div class="value-card">
+      <div class="value-card reveal reveal-delay-1">
+        <div class="value-num">05</div>
         <h3>Small Spaces</h3>
         <p>Ideas specifically designed for apartments, shared spaces, and rooms where every square foot counts, including reading nooks, balconies, and single room studio setups.</p>
       </div>
-      <div class="value-card">
+      <div class="value-card reveal reveal-delay-2">
+        <div class="value-num">06</div>
         <h3>Shop Picks</h3>
         <p>Handpicked product lists from Amazon India organized by room and style, each chosen because it delivers good quality at a price that makes sense for the average home budget.</p>
       </div>
     </div>
-
-    <h2>How We Choose What We Recommend</h2>
-
-    <p>Every product recommendation on RoomReset goes through the same basic test before it makes it onto the site. Does it do what it claims to do, does it look good in a real home setting rather than just a staged photo, is the price genuinely reasonable for what you are getting, and does it have enough reviews from real buyers to give us confidence that it holds up over time. Products that pass all four questions make the cut. Products that fail any one of them do not appear here, regardless of commission rates or brand partnerships.</p>
-
-    <p>We also update our recommendations regularly. Home products change, prices shift, and things go in and out of stock. An out of date recommendation that leads you to a discontinued product or a price that no longer reflects reality is not useful to anyone, so we treat our articles as living documents rather than one and done posts.</p>
-
-    <h2>A Note on Affiliate Links</h2>
-
-    <p>Some of the links on RoomReset are affiliate links, which means we earn a small commission if you make a purchase through them at no extra cost to you. This is how the site sustains itself and allows us to keep publishing free content. We never recommend a product specifically because of the commission it earns, and we never allow affiliate arrangements to influence our editorial judgment. You can read the full details of how this works in our <a href="../affiliate-disclosure/index.html" style="color: var(--sage-deep); text-decoration: underline;">affiliate disclosure</a>.</p>
-
-    <div class="contact-strip">
-      <h2>Get In Touch</h2>
-      <p>If you have a question about a recommendation, want to suggest a topic, or just want to say hello, we would genuinely love to hear from you. Every message gets read even when we are slow to reply.</p>
-      <a href="mailto:roomreset6@gmail.com" class="btn">Send a Message</a>
-    </div>
-
   </div>
 </section>
 
+<!-- QUOTE BAND -->
+<section class="quote-band">
+  <div class="wrap">
+    <blockquote class="reveal">"A beautiful home is not about how much you spend. It is about how intentionally you choose."</blockquote>
+    <cite class="reveal">The RoomReset Philosophy</cite>
+  </div>
+</section>
+
+<!-- HOW WE WORK -->
+<section class="process-strip">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-eyebrow">Our process</span>
+      <h2>How every recommendation is made</h2>
+    </div>
+    <div class="process-grid">
+      <div class="process-step reveal">
+        <div class="process-num">01</div>
+        <h3>Research the space</h3>
+        <p>Every article begins with a clear understanding of the specific room, its typical constraints, and what most people actually struggle with in that space.</p>
+      </div>
+      <div class="process-step reveal reveal-delay-1">
+        <div class="process-num">02</div>
+        <h3>Test the products</h3>
+        <p>We look for products with genuine reviews, real use photos, and a track record of holding up over time before any recommendation is made.</p>
+      </div>
+      <div class="process-step reveal reveal-delay-2">
+        <div class="process-num">03</div>
+        <h3>Check the price</h3>
+        <p>Every product is assessed for value at its actual price point. We never recommend something just because it looks good in a photoshoot.</p>
+      </div>
+      <div class="process-step reveal">
+        <div class="process-num">04</div>
+        <h3>Update regularly</h3>
+        <p>Products change, prices shift, and better options appear. We treat every article as a living document and revisit recommendations regularly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPLIT: text left, image right — replace .split-img-2 background-color -->
+<div class="wrap">
+  <div class="split-section reverse">
+    <div class="split-img split-img-2 reveal"></div>
+    <div class="split-text reveal reveal-delay-1">
+      <span class="eyebrow">Affiliate links</span>
+      <h2>Honest about how this site <em>works</em></h2>
+      <p>Some of the links on RoomReset are affiliate links, which means we earn a small commission if you make a purchase through them at no extra cost to you. This is how the site sustains itself and allows us to keep publishing free content.</p>
+      <p>We never recommend a product specifically because of the commission it earns, and we never allow affiliate arrangements to influence our editorial judgment. You can read the full details in our affiliate disclosure.</p>
+      <a href="../affiliate-disclosure/index.html" style="display: inline-block; margin-top: 14px; font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--sage-deep); border-bottom: 1px solid var(--sage-deep); padding-bottom: 2px;">Read the Affiliate Disclosure</a>
+    </div>
+  </div>
+</div>
+
+<!-- FULL IMAGE BAND — replace .full-img-band-bg background-color -->
+<div class="full-img-band">
+  <div class="full-img-band-bg"></div>
+  <div class="full-img-band-overlay"></div>
+  <div class="full-img-band-content">
+    <h2>"Every room deserves a reset."</h2>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section class="contact-strip">
+  <div class="wrap">
+    <span class="eyebrow">Say hello</span>
+    <h2>Get In Touch</h2>
+    <p>If you have a question about a recommendation, want to suggest a topic, or just want to say hello, we would genuinely love to hear from you. Every message gets read even when we are slow to reply.</p>
+    <a href="mailto:roomreset6@gmail.com" class="btn-dark">Send a Message</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
 <footer>
   <div class="wrap">
-    <div class="footer-grid">
-      <div>
+    <div class="footer-top">
+      <div class="footer-brand">
         <a href="../index.html" class="logo">Room<em>Reset</em></a>
-        <p style="margin-top: 18px;">Practical, beautiful ideas for creating a home that feels expensive, intentional, and entirely your own, all without stretching your budget further than it needs to go.</p>
+        <p>Practical, beautiful ideas for creating a home that feels expensive, intentional, and entirely your own, all without stretching your budget further than it needs to go.</p>
       </div>
-      <div>
+      <div class="footer-col">
         <h4>Explore</h4>
         <ul>
           <li><a href="../bedroom-ideas/index.html">Room Ideas</a></li>
           <li><a href="../organization/index.html">Organization</a></li>
           <li><a href="../budget-decor/index.html">Budget Decor</a></li>
           <li><a href="../by-style/index.html">By Style</a></li>
+          <li><a href="../small-spaces/index.html">Small Spaces</a></li>
         </ul>
       </div>
-      <div>
+      <div class="footer-col">
         <h4>Site</h4>
         <ul>
           <li><a href="index.html">About Us</a></li>
           <li><a href="mailto:roomreset6@gmail.com">Contact</a></li>
         </ul>
       </div>
-      <div>
+      <div class="footer-col">
         <h4>Legal</h4>
         <ul>
           <li><a href="../privacy-policy/index.html">Privacy Policy</a></li>
@@ -439,6 +812,25 @@
     </div>
   </div>
 </footer>
+
+<script>
+  const header = document.getElementById('site-header');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  revealEls.forEach(el => observer.observe(el));
+</script>
 
 </body>
 </html>
