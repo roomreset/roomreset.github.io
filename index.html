@@ -721,14 +721,14 @@
   }
 
   /* Mood image slots — replace background-color with background-image */
-  .mood-item:nth-child(1) { background-image: url('https://roomreset.github.io/assets/images/mood1_image.jpeg') }
+  .mood-item:nth-child(1) { background-image: url('https://roomreset.github.io/assets/images/intro_band_image.jpeg') }
   .mood-item:nth-child(2) { background-image: url('https://roomreset.github.io/assets/images/mood2_image.jpeg') }
   .mood-item:nth-child(3) { background-image: url('https://roomreset.github.io/assets/images/mood3_image.jpeg') }
 
   .mood-item-bg {
   position: absolute;
   inset: 0;
-  background-size: 100% auto;
+  background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
   transition: transform 0.7s ease;
