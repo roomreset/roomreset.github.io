@@ -726,12 +726,13 @@
   .mood-item:nth-child(3) { background-image: url('https://roomreset.github.io/assets/images/mood3_image.jpeg') }
 
   .mood-item-bg {
-    position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: center;
-    transition: transform 0.7s ease;
-  }
+  position: absolute;
+  inset: 0;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: transform 0.7s ease;
+}
 
   .mood-item:hover .mood-item-bg { transform: scale(1.05); }
 
