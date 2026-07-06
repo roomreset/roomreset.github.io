@@ -117,7 +117,7 @@
     position: absolute;
     inset: 0;
     background-color: #c9b5aa;
-    background-image: url('https://roomreset.github.io/assets/images/roomreset_banner_image.jpeg');
+    /* REPLACE background-color with: background-image: url('images/hero-bg.jpg'); */
     background-size: cover;
     background-position: center;
     transform: scale(1.06);
@@ -312,7 +312,7 @@
     border-radius: 3px;
     overflow: hidden;
     background-color: #d4bdb5;
-    background-image: url('https://roomreset.github.io/assets/images/intro_band_image.jpeg');
+    /* REPLACE background-color with: background-image: url('images/intro-room.jpg'); */
     background-size: cover;
     background-position: center;
   }
@@ -519,7 +519,7 @@
     position: absolute;
     inset: 0;
     background-color: #b8a898;
-    background-image: url('https://roomreset.github.io/assets/images/Featured_strip_image.jpeg');
+    /* REPLACE with: background-image: url('images/feature-strip.jpg'); */
     background-size: cover;
     background-position: center 40%;
   }
@@ -707,61 +707,94 @@
     color: var(--sage-deep);
   }
 
-  /* ── MOOD GRID ── */
-  /* Three tall editorial image slots side by side */
-  .mood-grid {
+  /* ── AESTHETIC SHOWCASE ── */
+  .aesthetic-showcase {
+    padding: 110px 0;
+    background: var(--charcoal);
+  }
+
+  .aesthetic-showcase .section-eyebrow { color: var(--sage); }
+
+  .aesthetic-showcase .section-head h2 { color: var(--white); }
+
+  .aesthetic-showcase .section-head p { color: rgba(255,255,255,0.5); }
+
+  .aesthetic-cards {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    height: 460px;
+    gap: 20px;
+    margin-top: 0;
   }
 
-  .mood-item {
-    position: relative;
+  .aesthetic-card {
+    background: rgba(255,255,255,0.04);
+    border-radius: 4px;
     overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.07);
+    transition: transform 0.35s ease, border-color 0.35s ease;
   }
 
-  /* Mood image slots — replace background-color with background-image */
-  .mood-item:nth-child(1) { background-image: url('https://roomreset.github.io/assets/images/mood1_image.jpeg') }
-  .mood-item:nth-child(2) { background-image: url('https://roomreset.github.io/assets/images/mood2_image.jpeg') }
-  .mood-item:nth-child(3) { background-image: url('https://roomreset.github.io/assets/images/mood3_image.jpeg') }
-
-  .mood-item-bg {
-  position: absolute;
-  inset: 0;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  transition: transform 0.7s ease;
-}
-
-  .mood-item:hover .mood-item-bg { transform: scale(1.05); }
-
-  .mood-item-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, transparent 50%, rgba(40,35,30,0.65) 100%);
+  .aesthetic-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(255,255,255,0.16);
   }
 
-  .mood-item-label {
-    position: absolute;
-    bottom: 28px;
-    left: 28px;
-    right: 28px;
+  /* Image wrapper — uses real img tag, no background tricks */
+  .aesthetic-card-img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: #3a3530;
   }
 
-  .mood-item-label span {
+  .aesthetic-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+    transition: transform 0.5s ease;
+    background: #3a3530;
+  }
+
+  .aesthetic-card:hover .aesthetic-card-img img {
+    transform: scale(1.04);
+  }
+
+  .aesthetic-card-body {
+    padding: 24px 26px 28px;
+  }
+
+  .aesthetic-card-tag {
     font-size: 11px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.65);
+    color: var(--sage);
     display: block;
-    margin-bottom: 4px;
+    margin-bottom: 10px;
+    font-weight: 500;
   }
 
-  .mood-item-label h3 {
-    font-size: 22px;
+  .aesthetic-card-body h3 {
+    font-size: 20px;
     color: var(--white);
     font-style: italic;
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+
+  .aesthetic-card-body p {
+    font-size: 13.5px;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.7;
+  }
+
+  @media (max-width: 1020px) {
+    .aesthetic-cards { grid-template-columns: 1fr; max-width: 500px; margin: 0 auto; }
+  }
+
+  @media (max-width: 680px) {
+    .aesthetic-cards { max-width: 100%; }
   }
 
   /* ── NEWSLETTER ── */
@@ -1213,33 +1246,59 @@
   </div>
 </section>
 
-<!-- MOOD GRID — replace .mood-item nth-child background-color values with background-image -->
-<div class="mood-grid">
-  <div class="mood-item">
-    <div class="mood-item-bg"></div>
-    <div class="mood-item-overlay"></div>
-    <div class="mood-item-label">
-      <span>Aesthetic</span>
-      <h3>Soft and Organic</h3>
+<!-- AESTHETIC SHOWCASE
+     Drop your three mood images into the src="" of each img tag below.
+     Example: src="assets/images/mood1_image.jpeg"
+     The images will always show in full — no cropping, no zoom issues. -->
+<section class="aesthetic-showcase">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="section-eyebrow">Browse by aesthetic</span>
+      <h2>Find your decorating style</h2>
+      <p>Every home has a mood. Discover which aesthetic feels most like you and explore the guides built around it.</p>
+    </div>
+
+    <div class="aesthetic-cards">
+
+      <div class="aesthetic-card reveal">
+        <!-- Replace src with your mood 1 image path -->
+        <div class="aesthetic-card-img">
+          <img src="assets/images/mood1_image.jpeg" alt="Soft and organic home aesthetic" loading="lazy">
+        </div>
+        <div class="aesthetic-card-body">
+          <span class="aesthetic-card-tag">Aesthetic</span>
+          <h3>Soft and Organic</h3>
+          <p>Dried florals, warm wood, linen textures, and earthy tones that feel like a deep breath. This aesthetic is calm, collected, and entirely unhurried.</p>
+        </div>
+      </div>
+
+      <div class="aesthetic-card reveal reveal-delay-1">
+        <!-- Replace src with your mood 2 image path -->
+        <div class="aesthetic-card-img">
+          <img src="assets/images/mood2_image.jpeg" alt="Moody and layered home aesthetic" loading="lazy">
+        </div>
+        <div class="aesthetic-card-body">
+          <span class="aesthetic-card-tag">Style</span>
+          <h3>Moody and Layered</h3>
+          <p>Deep tones, rich textures, amber lamplight, and rooms that feel like they hold secrets. Dramatic without being dark, warm without being obvious.</p>
+        </div>
+      </div>
+
+      <div class="aesthetic-card reveal reveal-delay-2">
+        <!-- Replace src with your mood 3 image path -->
+        <div class="aesthetic-card-img">
+          <img src="assets/images/mood3_image.jpeg" alt="Clean and minimal home aesthetic" loading="lazy">
+        </div>
+        <div class="aesthetic-card-body">
+          <span class="aesthetic-card-tag">Vibe</span>
+          <h3>Clean and Minimal</h3>
+          <p>White walls, one perfect plant, and nothing that does not earn its place. Minimalism done well is not cold, it is deliberately restful.</p>
+        </div>
+      </div>
+
     </div>
   </div>
-  <div class="mood-item">
-    <div class="mood-item-bg"></div>
-    <div class="mood-item-overlay"></div>
-    <div class="mood-item-label">
-      <span>Style</span>
-      <h3>Moody and Layered</h3>
-    </div>
-  </div>
-  <div class="mood-item">
-    <div class="mood-item-bg"></div>
-    <div class="mood-item-overlay"></div>
-    <div class="mood-item-label">
-      <span>Vibe</span>
-      <h3>Clean and Minimal</h3>
-    </div>
-  </div>
-</div>
+</section>
 
 <!-- NEWSLETTER -->
 <section class="newsletter">
